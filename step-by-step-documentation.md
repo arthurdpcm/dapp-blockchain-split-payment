@@ -1,6 +1,11 @@
 
 first step: create frontend and smart-contract directories
 
+frontend:
+cd frontend
+npm create vite@latest . -- --template react-ts
+npm install
+
 creating docker environment:
 - create docker-compose.yml on root folder
 - create frontend/Dockerfile 
@@ -9,12 +14,10 @@ creating docker environment:
 (--build for the first time or whenever a change is made in the Dockerfile)
 
 
-frontend:
-cd frontend
-npm create vite@latest . -- --template react-ts
-npm install
+creating smart-contract:
+npm init -y
+npm install --save-dev hardhat
+npx hardhat 
 
-
-
-
-npx hardhat to init the project
+(Initializing a project with npx hardhat is deprecated and will be removed in the future.
+ Please use npx hardhat init instead.)
