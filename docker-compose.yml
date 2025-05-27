@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   frontend:
@@ -14,6 +14,15 @@ services:
       - VITE_APP_BLOCKCHAIN_RPC_URL=http://blockchain:8545
     working_dir: /app
     command: ["npm", "run", "dev"]
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app
+          ignore:
+            - node_modules
+            
+
 
   smart-contract:
     build:
