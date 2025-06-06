@@ -1,36 +1,12 @@
-# https://thegraph.com/docs/en/supported-networks/matic/
-# https://thegraph.com/docs/en/token-api/quick-start/
-# KEY: pool-brl-token
-
-
-import json
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 import requests
 import os
 from dotenv import load_dotenv
 import datetime
 from get_token_pools import get_brl_usd_pool_ids, BRL_TOKENS, USD_TOKENS
-#https://thegraph.com/explorer/subgraphs/CwpebM66AH5uqS5sreKij8yEkkPcHvmyEs7EwFtdM5ND?view=Query&chain=arbitrum-one
 
-# brz_address = "0x4eD141110F6EeeAbA9A1df36d8c26f684d2475Dc"
-
-# address = '0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208'
-
-# {
-#   token(id: "0xe6a537a407488807f0bbeb0038b79004f19dddfb") {
-#     name
-#     id
-#     symbol
-#     poolCount
-#   }
-#   pool(id: "0x1d84461ca1454bc0b8b2ad1bfd968575cd724e71e3656f970ea495f41215ab85") {
-#     volumeToken0
-#     swaps{
-#       amount0
-#       amountUSD
-#       timestamp
-#     }
-#   }
-# }
+app = FastAPI()
 
 load_dotenv()
 
@@ -40,42 +16,9 @@ headers = {
     "Authorization": f"Bearer {os.getenv('JWT_API_TOKEN')}",
 }
 
-
-
-query = """
-query($startTimestamp: String!) {
-  pool(id: "0x1d84461ca1454bc0b8b2ad1bfd968575cd724e71e3656f970ea495f41215ab85") {
-    volumeToken0
-    swaps(where: {timestamp_gte: $startTimestamp}) {
-      amount0
-      timestamp
-      token0 {
-        name
-        symbol
-        id
-      }
-      token1 {
-        name
-        symbol
-        id
-      }
-    }
-  }
-  token(id: "0xe6a537a407488807f0bbeb0038b79004f19dddfb") {
-    name
-    id
-    symbol
-    poolCount
-  }
-}
-"""
-
 def first_day_of_month_timestamp() -> str:
-    # Data atual em UTC (timezone-aware)
     now = datetime.datetime.now(datetime.timezone.utc)
-    # Substitui o dia por 1 e horário por meia-noite
     first_day = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    # Converte para timestamp inteiro em segundos
     return str(int(first_day.timestamp()))
 
 def get_swaps_for_pool(pool_id, start_timestamp):
@@ -104,35 +47,30 @@ def is_brl_to_usd_swap(swap):
     token1 = swap["token1"]["id"].lower()
     amount0 = float(swap["amount0"])
     amount1 = float(swap["amount1"])
-    # Case 1: BRL is token0, USD is token1, selling BRL (amount0 < 0)
     if token0 in BRL_TOKENS and token1 in USD_TOKENS and amount0 < 0:
-        return True, abs(amount0)  # amount0 is BRL sold
-    # Case 2: USD is token0, BRL is token1, selling BRL (amount1 < 0)
+        return True, abs(amount0)
     if token1 in BRL_TOKENS and token0 in USD_TOKENS and amount1 < 0:
-        return True, abs(amount1)  # amount1 is BRL sold
+        return True, abs(amount1)
     return False, 0.0
 
-def main():
+@app.get("/brl-usd-swaps")
+def brl_usd_swaps():
     start_timestamp = first_day_of_month_timestamp()
     pool_ids = get_brl_usd_pool_ids()
-    data = []
+    results = []
     for pool_id in pool_ids:
         swaps = get_swaps_for_pool(pool_id, start_timestamp)
         total_brl_to_usd = 0.0
-        token0 = swaps[0]["token0"]["symbol"]
-        token1 = swaps[0]["token1"]["symbol"]
+        token0 = swaps[0]["token0"]["symbol"] if swaps else None
+        token1 = swaps[0]["token1"]["symbol"] if swaps else None
         for swap in swaps:
             is_brl_usd, brl_amount = is_brl_to_usd_swap(swap)
             if is_brl_usd:
                 total_brl_to_usd += brl_amount
-        data.append({
+        results.append({
             "pool_id": pool_id,
             "token0": token0,
             "token1": token1,
             "total_brl_to_usd": total_brl_to_usd
         })
-    return json.dumps(data, indent=2)
-
-if __name__ == "__main__":
-    print(main())
-
+    return JSONResponse(content=results) 
