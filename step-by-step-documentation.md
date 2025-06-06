@@ -21,3 +21,9 @@ npx hardhat
 
 (Initializing a project with npx hardhat is deprecated and will be removed in the future.
  Please use npx hardhat init instead.)
+
+
+
+ ao deployar um contrato voce paga um custo pela transacao, que é de fato o deploy do contrato
+ o contrato tem um endereço
+ 

@@ -22,8 +22,6 @@ services:
           ignore:
             - node_modules
             
-
-
   smart-contract:
     build:
       context: ./smart-contract
@@ -33,6 +31,9 @@ services:
     volumes:
       - ./smart-contract:/app
       - /app/node_modules
+    environment:
+      - SEPOLIA_API_URL = ${SEPOLIA_API_URL}
+      - SEPOLIA_PRIVATE_KEY = ${SEPOLIA_PRIVATE_KEY}
     working_dir: /app
     command: ["npx", "hardhat", "node"]
 

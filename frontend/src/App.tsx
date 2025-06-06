@@ -5,7 +5,8 @@ function App() {
   return (
     <>
       <div>
-        <h1>dapp-blockchain-split-payment</h1>
+        <input type="text" placeholder="Enter your message" />
+        <button>Send</button>
       </div>
     </>
   )
