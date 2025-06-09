@@ -8,9 +8,9 @@ export const Button = styled.button<{
   hasBorder: boolean;
   padding: 'large' | 'medium' | 'small';
 }>`
-  background: ${({ hasBorder }) => (hasBorder ? COLORS.purple : 'none')};
-  color: ${({ hasBorder }) => (hasBorder ? COLORS.white : COLORS.purple)};
-  border: ${({ hasBorder }) => (hasBorder ? '1.5px solid ' + COLORS.purple : 'none')};
+  background: ${({ hasBorder }) => (hasBorder ? COLORS.oceanBlue : 'none')};
+  color: ${({ hasBorder }) => (hasBorder ? COLORS.white : COLORS.oceanBlue)};
+  border: ${({ hasBorder }) => (hasBorder ? '1.5px solid ' + COLORS.oceanBlue : 'none')};
   border-radius: 6px;
   padding: ${({ padding }) =>
     padding === 'large'
@@ -20,7 +20,7 @@ export const Button = styled.button<{
         : '0.2rem 0.5rem'};
   font-weight: bold;
   cursor: pointer;
-  font-size: ${({ isMobile }) => (isMobile ? '0.95rem' : '1rem')};
+  font-size: ${({ isMobile }) => (isMobile ? '1.2rem' : '1.5rem')};
   //   min-width: ${({ isMobile }) => (isMobile ? 80 : 120)}px;
   display: flex;
   align-items: center;
@@ -28,10 +28,10 @@ export const Button = styled.button<{
   gap: 0.5rem;
 
   &:hover {
-    background: ${({ hasBorder }) => (hasBorder ? COLORS.lightPurple : 'none')};
-    color: ${({ hasBorder }) => (hasBorder ? COLORS.white : COLORS.purple)};
-    border: ${({ hasBorder }) => (hasBorder ? '1.5px solid ' + COLORS.lightPurple : 'none')};
-    transform: scale(1.05);
+    background: ${({ hasBorder }) => (hasBorder ? COLORS.oceanBlue : 'none')};
+    color: ${({ hasBorder }) => (hasBorder ? COLORS.white : COLORS.oceanBlue)};
+    border: ${({ hasBorder }) => (hasBorder ? '1.5px solid ' + COLORS.oceanBlue : 'none')};
+    transform: scale(1.1);
     transition: all 0.2s;
   }
 `;

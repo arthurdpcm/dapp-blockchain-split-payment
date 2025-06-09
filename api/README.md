@@ -1,1 +1,1 @@
-Start backend: python -m uvicorn main:app --reload 
+Start backend: python -m uvicorn main:app --reload

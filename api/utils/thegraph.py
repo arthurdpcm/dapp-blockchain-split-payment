@@ -50,6 +50,8 @@ def get_brl_usd_pool_ids():
                     for pool in pools:
                         if pool.get("liquidity") and float(pool["liquidity"]) > 0:
                             pool_ids.add(pool["id"])
+                elif "errors" in json_data:
+                  print(json_data["errors"][0]["message"])
             else:
                 print(f"Error querying The Graph for pair {brl}/{usd}: {response.text}")
     return pool_ids
@@ -69,8 +71,10 @@ def get_swaps_for_pool(pool_id, start_timestamp):
     }}
     """
     resp = requests.post(url, json={"query": query, "variables": {"startTimestamp": start_timestamp}}, headers=headers)
+    
     if resp.ok:
         data = resp.json()
         if "data" in data and data["data"] and "pool" in data["data"] and data["data"]["pool"]:
             return data["data"]["pool"].get("swaps", [])
     return [] 
+  

@@ -39,7 +39,7 @@
 }
 
 .tax-monitor-title {
-  color: COLORS.purple;
+  color: COLORS.oceanBlue;
   margin: 0;
   font-size: 1.1rem;
 }
@@ -56,7 +56,7 @@
 .tax-monitor-total {
   font-size: 1.1rem;
   font-weight: bold;
-  color: COLORS.purple;
+  color: COLORS.oceanBlue;
   margin: 0.2rem 0;
 }
 

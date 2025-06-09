@@ -1,7 +1,13 @@
 export const COLORS = {
   lightPurple: '#874ced',
+  lightOceanBlue: '#23d9d9',
+  oceanBlue:'#1a9c9c',
+  loadingMiddle: '#91c988',
+  darkOceanBlue: '#106b6b',
+  orange: '#F28A2E',
   purple: '#7C3AED',
   darkPurple: '#3e157d',
+  darkOrange: '#7d4615',
   darkGray: '#23272F',
   lightGray: '#F5F5F5',
   borderGray: '#2D2F36',

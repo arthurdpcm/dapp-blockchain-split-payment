@@ -1,11 +1,13 @@
 // Header.tsx
-import { Link, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import { useWallet } from '../../hooks/useWallet';
-import { HeaderContainer, Title, Nav, StyledLink } from './Header.styled';
+import { HeaderContainer, Title, Nav, StyledLink, LogoContainer } from './Header.styled';
 import Modal from '../Modal/Modal';
 import Button from '../ui/Button/Button';
 import useIsMobile from '../../hooks/useIsMobile';
+import { useTranslation } from 'react-i18next';
+import LanguagePicker from '../ui/LanguagePicker/LanguagePicker';
 
 function abbreviateAddress(address: string) {
   return address.slice(0, 6) + '...' + address.slice(-4);
@@ -16,6 +18,7 @@ const Header = () => {
   const isMobile = useIsMobile();
   const { account, connect, disconnect } = useWallet();
   const [modalOpen, setModalOpen] = useState(false);
+  const {t} = useTranslation();
 
   const handleAddressClick = () => {
     setModalOpen(true);
@@ -32,14 +35,18 @@ const Header = () => {
 
   return (
     <HeaderContainer isMobile={isMobile}>
-      <Title isMobile={isMobile}>{isMobile ? 'SP' : 'Split Payment'}</Title>
+      <LogoContainer>
+        <img src='/split-payment-removebg-preview.png' width={96} />
+        <Title isMobile={isMobile}>{isMobile ? 'SP' : 'Split Payment'}</Title>
+      </LogoContainer>
       <Nav isMobile={isMobile}>
         <StyledLink to="/" isActive={location.pathname === '/'} isMobile={isMobile}>
-          Tax Monitor
+          {t('tax_monitor')}
         </StyledLink>
         <StyledLink to="/brl-swap" isActive={location.pathname === '/brl-swap'} isMobile={isMobile}>
           BRL Swap
         </StyledLink>
+        <LanguagePicker />
         {account ? (
           <Button
             onClick={handleAddressClick}
@@ -58,7 +65,7 @@ const Header = () => {
             hasBorder={true}
             padding="large"
           >
-            Connect Wallet
+            {t('connect_wallet')}
           </Button>
         )}
       </Nav>

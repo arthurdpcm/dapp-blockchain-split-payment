@@ -23,7 +23,7 @@ export const ModalContent = styled.div`
 `;
 
 export const ModalTitle = styled.h3`
-  color: ${COLORS.purple};
+  color: ${COLORS.oceanBlue};
   margin-bottom: 16px;
 `;
 
