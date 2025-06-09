@@ -128,7 +128,7 @@ const TaxMonitor = () => {
         </Button>
       </TaxMonitorHeader>
       <TaxMonitorDescription>
-        {t('total_transacted')}
+        {t('total_transacted')} ({new Date().getMonth() + 1}):
       </TaxMonitorDescription>
       <TaxMonitorTotal>
         {formatBRL(brlUsdSwapsByPool.reduce((acc, pool) => acc + pool.total_brl_to_usd, 0))}
@@ -153,7 +153,11 @@ const TaxMonitor = () => {
             </TaxMonitorTableHead>
             <tbody>
               {brlUsdSwapsByPool.map((pool) => (
-                <TaxMonitorTableRow key={pool.pool_id}>
+                <TaxMonitorTableRow
+                  key={pool.pool_id}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => window.location.href = `/pool/${pool.pool_id}`}
+                >
                   <TaxMonitorTableCell>{pool.token0} / {pool.token1}</TaxMonitorTableCell>
                   <TaxMonitorTableCell>{formatBRL(pool.total_brl_to_usd)}</TaxMonitorTableCell>
                 </TaxMonitorTableRow>

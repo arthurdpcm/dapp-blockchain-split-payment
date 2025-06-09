@@ -4,10 +4,12 @@ import styled from 'styled-components';
 
 export const Button = styled.button<{
   isMobile: boolean;
-  isConnect: boolean;
+  isConnect?: boolean;
   hasBorder: boolean;
-  padding: 'large' | 'medium' | 'small';
+  padding?: 'large' | 'medium' | 'small';
+  disabled?: boolean;
 }>`
+
   background: ${({ hasBorder }) => (hasBorder ? COLORS.oceanBlue : 'none')};
   color: ${({ hasBorder }) => (hasBorder ? COLORS.white : COLORS.oceanBlue)};
   border: ${({ hasBorder }) => (hasBorder ? '1.5px solid ' + COLORS.oceanBlue : 'none')};
@@ -26,8 +28,18 @@ export const Button = styled.button<{
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-
-  &:hover {
+  &:disabled {
+    background: ${({ hasBorder }) => (hasBorder ? COLORS.lightGray : 'none')};
+    color: ${({ hasBorder }) => (hasBorder ? COLORS.darkGray : COLORS.lightGray)};
+    cursor: not-allowed;
+    &:hover {
+      background: ${({ hasBorder }) => (hasBorder ? COLORS.lightGray : 'none')};
+      color: ${({ hasBorder }) => (hasBorder ? COLORS.darkGray : COLORS.lightGray)};
+      border: ${({ hasBorder }) => (hasBorder ? '1.5px solid ' + COLORS.lightGray : 'none')};
+      transform: none;
+    }
+  }
+  &:hover:enabled {
     background: ${({ hasBorder }) => (hasBorder ? COLORS.oceanBlue : 'none')};
     color: ${({ hasBorder }) => (hasBorder ? COLORS.white : COLORS.oceanBlue)};
     border: ${({ hasBorder }) => (hasBorder ? '1.5px solid ' + COLORS.oceanBlue : 'none')};

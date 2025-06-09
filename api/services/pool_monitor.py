@@ -34,3 +34,13 @@ class PoolMonitorService:
         if token1 in BRL_TOKENS and token0 in USD_TOKENS and amount1 < 0:
             return True, abs(amount1)
         return False, 0.0 
+
+
+    def get_pool(self, pool_id: str):
+        start_timestamp = first_day_of_month_timestamp()
+        swaps = get_swaps_for_pool(pool_id, start_timestamp)
+        
+        return {
+            "pool_id": pool_id,
+            "swaps": swaps,
+        }

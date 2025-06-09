@@ -36,7 +36,7 @@ export const TaxMonitorHeader = styled.div`
 
 export const TaxMonitorDescription = styled.p`
   font-size: 1.2rem;
- 
+  overflow-wrap: anywhere;
 `;
 
 export const TaxMonitorTitle = styled.h1`

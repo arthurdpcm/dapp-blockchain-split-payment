@@ -2,7 +2,7 @@
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useWallet } from '../../hooks/useWallet';
-import { HeaderContainer, Title, Nav, StyledLink, LogoContainer } from './Header.styled';
+import { HeaderContainer, Title, Nav, StyledLink, LogoContainer, RightNav } from './Header.styled';
 import Modal from '../Modal/Modal';
 import Button from '../ui/Button/Button';
 import useIsMobile from '../../hooks/useIsMobile';
@@ -38,14 +38,17 @@ const Header = () => {
       <LogoContainer>
         <img src='/split-payment-removebg-preview.png' width={96} />
         <Title isMobile={isMobile}>{isMobile ? 'SP' : 'Split Payment'}</Title>
+        <Nav isMobile={isMobile}>
+          <StyledLink to="/" isActive={location.pathname === '/'} isMobile={isMobile}>
+            {t('tax_monitor')}
+          </StyledLink>
+          <StyledLink to="/brl-swap" isActive={location.pathname === '/brl-swap'} isMobile={isMobile}>
+            BRL Swap
+          </StyledLink>
+        </Nav>
       </LogoContainer>
-      <Nav isMobile={isMobile}>
-        <StyledLink to="/" isActive={location.pathname === '/'} isMobile={isMobile}>
-          {t('tax_monitor')}
-        </StyledLink>
-        <StyledLink to="/brl-swap" isActive={location.pathname === '/brl-swap'} isMobile={isMobile}>
-          BRL Swap
-        </StyledLink>
+
+      <RightNav>
         <LanguagePicker />
         {account ? (
           <Button
@@ -68,7 +71,7 @@ const Header = () => {
             {t('connect_wallet')}
           </Button>
         )}
-      </Nav>
+      </RightNav>
       <Modal open={modalOpen} onClose={handleModalClose} onConfirm={handleModalConfirm} />
     </HeaderContainer>
   );

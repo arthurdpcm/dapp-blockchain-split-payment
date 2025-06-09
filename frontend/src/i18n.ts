@@ -6,7 +6,7 @@ i18n.use(initReactI18next).init({
     en: {
       translation: {
         tax_monitor: "Tax Monitor",
-        total_transacted: "Total transacted between BRL and USD stablecoins:",
+        total_transacted: "Total transacted between BRL and USD stablecoins in the current month",
         tax: "Tax (3.5%)",
         details: "Details by pair:",
         loading: "Loading, please wait...",
@@ -23,12 +23,14 @@ i18n.use(initReactI18next).init({
         success: "Operation successful",
         pair: "Pair",
         total: "Total",
+        previous: "Previous",
+        next: "Next",
       },
     },
     pt: {
       translation: {
         tax_monitor: "Monitor de Taxas",
-        total_transacted: "Total transacionado entre BRL e USD stablecoins:",
+        total_transacted: "Total transacionado entre BRL e USD stablecoins no mês atual",
         tax: "Taxa (3,5%)",
         details: "Detalhamento por par:",
         loading: "Carregando, por favor aguarde...",
@@ -45,6 +47,8 @@ i18n.use(initReactI18next).init({
         success: "Operação realizada com sucesso",
         pair: "Par",
         total: "Total",
+        previous: "Anterior",
+        next: "Próximo",
       },
     },
   },

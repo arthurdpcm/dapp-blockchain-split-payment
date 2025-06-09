@@ -45,3 +45,8 @@ export const StyledLink = styled(Link)<{ isActive: boolean; isMobile: boolean }>
   }
 `;
 
+export const RightNav = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+`;
