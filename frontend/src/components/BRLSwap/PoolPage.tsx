@@ -81,7 +81,7 @@ const PoolPage = () => {
         <TaxMonitorTitle>{token0} / {token1}</TaxMonitorTitle>
       </TaxMonitorHeader>
       <TaxMonitorDescription>
-        {t('total_transacted')}
+        {t('total_swaps')} ({new Date().getMonth() + 1}):
       </TaxMonitorDescription>
       <TaxMonitorTotal>
         {pool.swaps.length} swaps

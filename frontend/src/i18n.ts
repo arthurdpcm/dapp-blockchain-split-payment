@@ -7,6 +7,7 @@ i18n.use(initReactI18next).init({
       translation: {
         tax_monitor: "Tax Monitor",
         total_transacted: "Total transacted between BRL and USD stablecoins in the current month",
+        total_swaps: "Total swaps made in the current month",
         tax: "Tax (3.5%)",
         details: "Details by pair:",
         loading: "Loading, please wait...",
@@ -31,6 +32,7 @@ i18n.use(initReactI18next).init({
       translation: {
         tax_monitor: "Monitor de Taxas",
         total_transacted: "Total transacionado entre BRL e USD stablecoins no mês atual",
+        total_swaps: "Total de swaps realizadas no mês atual",
         tax: "Taxa (3,5%)",
         details: "Detalhamento por par:",
         loading: "Carregando, por favor aguarde...",
