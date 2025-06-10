@@ -57,24 +57,45 @@ def get_brl_usd_pool_ids():
     return pool_ids
 
 def get_swaps_for_pool(pool_id, start_timestamp):
-    query = f"""
-    query($startTimestamp: String!) {{
-      pool(id: \"{pool_id}\") {{
-        swaps(where: {{timestamp_gte: $startTimestamp}}) {{
-          amount0
-          amount1
-          timestamp
-          token0 {{ id symbol }}
-          token1 {{ id symbol }}
+    all_swaps = []
+    last_id = ""
+    while True:
+        query = f"""
+        query($startTimestamp: String!, $lastId: String!) {{
+          pool(id: "{pool_id}") {{
+            swaps(
+              first: 1000,
+              where: {{timestamp_gte: $startTimestamp, id_gt: $lastId}}
+              orderBy: id
+              orderDirection: asc
+            ) {{
+              id
+              amount0
+              amount1
+              timestamp
+              token0 {{ id symbol }}
+              token1 {{ id symbol }}
+            }}
+          }}
         }}
-      }}
-    }}
-    """
-    resp = requests.post(url, json={"query": query, "variables": {"startTimestamp": start_timestamp}}, headers=headers)
-    
-    if resp.ok:
-        data = resp.json()
-        if "data" in data and data["data"] and "pool" in data["data"] and data["data"]["pool"]:
-            return data["data"]["pool"].get("swaps", [])
-    return [] 
-  
+        """
+        variables = {"startTimestamp": start_timestamp, "lastId": last_id}
+        resp = requests.post(url, json={"query": query, "variables": variables}, headers=headers)
+        if resp.ok:
+            data = resp.json()
+            swaps = []
+            if (
+                "data" in data and data["data"] and
+                "pool" in data["data"] and data["data"]["pool"] and
+                "swaps" in data["data"]["pool"]
+            ):
+                swaps = data["data"]["pool"]["swaps"]
+                all_swaps.extend(swaps)
+                if len(swaps) < 1000:
+                    break
+                last_id = swaps[-1]["id"]
+            else:
+                break
+        else:
+            break
+    return all_swaps
