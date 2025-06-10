@@ -4,4 +4,3 @@ export interface BrlUsdSwapsByPool {
   token1: string;
   total_brl_to_usd: number;
 }
-

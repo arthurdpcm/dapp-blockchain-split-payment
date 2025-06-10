@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import TaxMonitor from './components/TaxMonitor/TaxMonitor';
 import BRLSwap from './components/BRLSwap/BRLSwap';
-import PoolPage from './components/BRLSwap/PoolPage';
+import PoolPage from './components/PoolPage/PoolPage';
 import { AccountProvider } from './context/AccountContext';
 import i18n from './i18n'; // Assuming this is your i18n import
 

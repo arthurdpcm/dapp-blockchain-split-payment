@@ -102,7 +102,7 @@ export const TaxMonitorTableHeader = styled.th`
   font-weight: 600;
   font-size: 1.2rem;
   color: ${COLORS.oceanBlue};
-  background: rgba(26,156,156,0.08);
+  background: rgba(26, 156, 156, 0.08);
   &:first-child {
     border-radius: 6px 0 0 6px;
   }

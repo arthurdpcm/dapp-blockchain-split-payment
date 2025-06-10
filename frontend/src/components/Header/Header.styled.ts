@@ -15,7 +15,7 @@ export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-`
+`;
 
 export const Title = styled.div<{ isMobile: boolean }>`
   font-weight: semibold;
@@ -39,9 +39,8 @@ export const StyledLink = styled(Link)<{ isActive: boolean; isMobile: boolean }>
   background: ${({ isActive }) => (isActive ? 'rgba(26, 156, 156,0.08)' : 'transparent')};
   transition: background 0.2s;
   font-size: ${({ isMobile }) => (isMobile ? '1.2rem' : '1.5rem')};
-  &:hover{
-    color: ${COLORS.lightOceanBlue}
-    
+  &:hover {
+    color: ${COLORS.lightOceanBlue};
   }
 `;
 

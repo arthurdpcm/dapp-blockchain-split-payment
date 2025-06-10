@@ -12,7 +12,7 @@ const LanguagePicker: React.FC = () => {
   const { i18n } = useTranslation();
   const [showLangDropdown, setShowLangDropdown] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
-  const currentLang = langOptions.find(l => l.code === i18n.language) || langOptions[0];
+  const currentLang = langOptions.find((l) => l.code === i18n.language) || langOptions[0];
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -33,18 +33,18 @@ const LanguagePicker: React.FC = () => {
 
   return (
     <PickerWrapper ref={langRef}>
-      <PickerButton
-        onClick={() => setShowLangDropdown(v => !v)}
-        aria-label={currentLang.label}
-      >
+      <PickerButton onClick={() => setShowLangDropdown((v) => !v)} aria-label={currentLang.label}>
         <img src={currentLang.img} alt={currentLang.label} width={28} />
       </PickerButton>
       {showLangDropdown && (
         <Dropdown>
-          {langOptions.map(opt => (
+          {langOptions.map((opt) => (
             <DropdownButton
               key={opt.code}
-              onClick={() => { i18n.changeLanguage(opt.code); setShowLangDropdown(false); }}
+              onClick={() => {
+                i18n.changeLanguage(opt.code);
+                setShowLangDropdown(false);
+              }}
               selected={i18n.language === opt.code}
               aria-label={opt.label}
               isMobile={isMobile}

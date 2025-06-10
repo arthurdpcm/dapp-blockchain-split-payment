@@ -33,7 +33,7 @@ function formatBRL(value: number) {
   });
 }
 
-const RefreshIcon = ({ size = "2rem", color = COLORS.oceanBlue }) => (
+const RefreshIcon = ({ size = '2rem', color = COLORS.oceanBlue }) => (
   <svg
     width={size}
     height={size}
@@ -81,7 +81,7 @@ const TaxMonitor = () => {
   const { account } = useContext(AccountContext);
   const isMobile = useIsMobile();
   const [isLoading, setIsLoading] = useState(true);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     handleGetBrlUsdSwapsByPool();
@@ -111,8 +111,7 @@ const TaxMonitor = () => {
     >
       <Loading />
     </div>
-  ) 
-  : (
+  ) : (
     <TaxMonitorContainer>
       <TaxMonitorHeader>
         <TaxMonitorTitle>{t('tax_monitor')}</TaxMonitorTitle>
@@ -124,7 +123,7 @@ const TaxMonitor = () => {
           hasBorder={false}
           padding="small"
         >
-          <RefreshIcon size={"2rem"} />
+          <RefreshIcon size={'2rem'} />
         </Button>
       </TaxMonitorHeader>
       <TaxMonitorDescription>
@@ -134,7 +133,10 @@ const TaxMonitor = () => {
         {formatBRL(brlUsdSwapsByPool.reduce((acc, pool) => acc + pool.total_brl_to_usd, 0))}
       </TaxMonitorTotal>
       <TaxMonitorDivider>
-        <TaxMonitorRow style={{ cursor: 'pointer' }} onClick={() => window.location.replace('meu tcc')}>
+        <TaxMonitorRow
+          style={{ cursor: 'pointer' }}
+          onClick={() => window.location.replace('meu tcc')}
+        >
           <span>{t('tax')}</span>
           <span style={{ color: COLORS.oceanBlue }}>
             {formatBRL(
@@ -143,22 +145,24 @@ const TaxMonitor = () => {
           </span>
         </TaxMonitorRow>
         <div style={{ marginTop: 18 }}>
-          <TaxMonitorDetailTitle>
-            {t('details')}
-          </TaxMonitorDetailTitle>
+          <TaxMonitorDetailTitle>{t('details')}</TaxMonitorDetailTitle>
           <TaxMonitorTable>
             <TaxMonitorTableHead>
-                <TaxMonitorTableHeader>{t('pair') || 'Pair'}</TaxMonitorTableHeader>
-                <TaxMonitorTableHeader style={{ textAlign: 'right' }}>{t('total') || 'Total'}</TaxMonitorTableHeader>
+              <TaxMonitorTableHeader>{t('pair') || 'Pair'}</TaxMonitorTableHeader>
+              <TaxMonitorTableHeader style={{ textAlign: 'right' }}>
+                {t('total') || 'Total'}
+              </TaxMonitorTableHeader>
             </TaxMonitorTableHead>
             <tbody>
               {brlUsdSwapsByPool.map((pool) => (
                 <TaxMonitorTableRow
                   key={pool.pool_id}
                   style={{ cursor: 'pointer' }}
-                  onClick={() => window.location.href = `/pool/${pool.pool_id}`}
+                  onClick={() => (window.location.href = `/pool/${pool.pool_id}`)}
                 >
-                  <TaxMonitorTableCell>{pool.token0} / {pool.token1}</TaxMonitorTableCell>
+                  <TaxMonitorTableCell>
+                    {pool.token0} / {pool.token1}
+                  </TaxMonitorTableCell>
                   <TaxMonitorTableCell>{formatBRL(pool.total_brl_to_usd)}</TaxMonitorTableCell>
                 </TaxMonitorTableRow>
               ))}

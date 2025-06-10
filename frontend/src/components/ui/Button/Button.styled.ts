@@ -9,7 +9,6 @@ export const Button = styled.button<{
   padding?: 'large' | 'medium' | 'small';
   disabled?: boolean;
 }>`
-
   background: ${({ hasBorder }) => (hasBorder ? COLORS.oceanBlue : 'none')};
   color: ${({ hasBorder }) => (hasBorder ? COLORS.white : COLORS.oceanBlue)};
   border: ${({ hasBorder }) => (hasBorder ? '1.5px solid ' + COLORS.oceanBlue : 'none')};

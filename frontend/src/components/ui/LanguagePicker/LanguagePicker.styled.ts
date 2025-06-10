@@ -22,7 +22,7 @@ export const Dropdown = styled.div`
   background: ${COLORS.darkGray};
   border: 1px solid #ddd;
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   z-index: 100;
   min-width: 90px;
   padding: 4px;
@@ -31,7 +31,7 @@ export const Dropdown = styled.div`
   gap: 8px;
 `;
 
-export const DropdownButton = styled.button<{ selected: boolean, isMobile?: boolean }>`
+export const DropdownButton = styled.button<{ selected: boolean; isMobile?: boolean }>`
   display: flex;
   align-items: center;
   gap: 8px;

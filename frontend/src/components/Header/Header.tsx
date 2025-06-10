@@ -18,7 +18,7 @@ const Header = () => {
   const isMobile = useIsMobile();
   const { account, connect, disconnect } = useWallet();
   const [modalOpen, setModalOpen] = useState(false);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   const handleAddressClick = () => {
     setModalOpen(true);
@@ -36,13 +36,17 @@ const Header = () => {
   return (
     <HeaderContainer isMobile={isMobile}>
       <LogoContainer>
-        <img src='/split-payment-removebg-preview.png' width={96} />
+        <img src="/split-payment-removebg-preview.png" width={96} />
         <Title isMobile={isMobile}>{isMobile ? 'SP' : 'Split Payment'}</Title>
         <Nav isMobile={isMobile}>
           <StyledLink to="/" isActive={location.pathname === '/'} isMobile={isMobile}>
             {t('tax_monitor')}
           </StyledLink>
-          <StyledLink to="/brl-swap" isActive={location.pathname === '/brl-swap'} isMobile={isMobile}>
+          <StyledLink
+            to="/brl-swap"
+            isActive={location.pathname === '/brl-swap'}
+            isMobile={isMobile}
+          >
             BRL Swap
           </StyledLink>
         </Nav>
