@@ -249,4 +249,18 @@ describe("SplitPayment", function () {
             expect(await splitPayment.isValidStablecoin(EURE_ADDRESS)).to.equal(false);
         });
     });
+    
+    describe("getValidStablecoins", function () {
+        it("should return the list of valid stablecoins", async function () {
+            const stablecoins = await splitPayment.getValidStablecoins();
+            expect(stablecoins.length).to.be.greaterThan(0);
+            expect(stablecoins).to.include(EURE_ADDRESS);
+        });
+
+        it("should return an empty array if no stablecoins are valid", async function () {
+            await splitPayment.removeValidStablecoin(EURE_ADDRESS);
+            const stablecoins = await splitPayment.getValidStablecoins();
+            expect(stablecoins.length).to.equal(0);
+        });
+    });
 });

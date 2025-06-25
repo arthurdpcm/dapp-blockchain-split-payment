@@ -82,6 +82,15 @@ contract SplitPayment {
   }
 
   /**
+   * @dev Returns the list of valid stablecoins
+   * @return An array of addresses of valid stablecoins
+   */
+  
+  function getValidStablecoins() public view returns (address[] memory) {
+      return validStablecoins;
+  }
+
+  /**
    * @dev Removes a stablecoin from the list of stablecoins
    * @param _validStablecoin The address of the stablecoin to remove
    * @notice This function is only callable by the owner of the contract
