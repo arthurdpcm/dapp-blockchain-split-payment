@@ -3,7 +3,7 @@ import { COLORS } from '../../constants/colors';
 import { getBrlUsdSwaps } from '../../services/api';
 import { useEffect } from 'react';
 import type { BrlUsdSwapsByPool } from '../../models/BrlUsdSwapsByPool';
-import Loading from '../Loading/Loading';
+import Loading from '../../components/Loading/Loading';
 import {
   TaxMonitorContainer,
   TaxMonitorDescription,
@@ -19,7 +19,7 @@ import {
   TaxMonitorTableRow,
   TaxMonitorTableCell,
 } from './TaxMonitor.styled';
-import Button from '../ui/Button/Button';
+import Button from '../../components/ui/Button/Button';
 import useIsMobile from '../../hooks/useIsMobile';
 import { AccountContext } from '../../context/AccountContext';
 import { useTranslation } from 'react-i18next';

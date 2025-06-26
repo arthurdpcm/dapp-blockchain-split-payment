@@ -1,5 +1,5 @@
 import Button from '../ui/Button/Button';
-
+import { useTranslation } from 'react-i18next';
 import {
   ModalButtonContainer,
   ModalContainer,
@@ -17,12 +17,14 @@ export default function Modal({
   onClose: () => void;
   onConfirm: () => void;
 }) {
+  const { t } = useTranslation();
+
   if (!open) return null;
   return (
     <ModalContainer>
       <ModalContent>
-        <ModalTitle>Desconectar carteira?</ModalTitle>
-        <ModalText>Tem certeza que deseja desvincular a carteira?</ModalText>
+        <ModalTitle>{t("disconnect_wallet_modal_title")}</ModalTitle>
+        <ModalText>{t("disconnect_wallet_modal_question")}</ModalText>
         <ModalButtonContainer>
           <Button
             onClick={onClose}
@@ -31,7 +33,7 @@ export default function Modal({
             hasBorder={true}
             padding="medium"
           >
-            Cancelar
+            {t('cancel') || 'Cancel'}
           </Button>
           <Button
             onClick={onConfirm}
@@ -40,7 +42,7 @@ export default function Modal({
             hasBorder={true}
             padding="medium"
           >
-            Desvincular
+            {t('confirm') || 'Confirm'}
           </Button>
         </ModalButtonContainer>
       </ModalContent>

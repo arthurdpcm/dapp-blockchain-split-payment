@@ -1,54 +1,50 @@
-# React + TypeScript + Vite
+# Split Payment DApp Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o frontend do projeto Split Payment DApp, uma aplicação web para swap de stablecoins BRL e USD na blockchain Polygon.
 
-Currently, two official plugins are available:
+## Funcionalidades
+- Swap entre stablecoins BRL e USD
+- Detecção automática de saldo do token selecionado na carteira conectada
+- Integração com MetaMask e fallback para RPC público da Polygon
+- Interface moderna e responsiva
+- Internacionalização (i18n) com suporte a português e inglês
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tecnologias Utilizadas
+- React + Vite
+- TypeScript
+- ethers.js
+- styled-components
+- i18next
 
-## Expanding the ESLint configuration
+## Como rodar localmente
+1. Instale as dependências:
+   ```sh
+   npm install
+   ```
+2. Crie um arquivo `.env` na pasta `frontend/` com o seguinte conteúdo:
+   ```env
+   VITE_INFURA_URL=https://polygon-mainnet.infura.io/v3/SEU_INFURA_PROJECT_ID
+   ```
+   > Você pode usar outro endpoint público de Polygon, se preferir.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+3. Rode o projeto:
+   ```sh
+   npm run dev
+   ```
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+4. Acesse em [http://localhost:5173](http://localhost:5173)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Estrutura de Pastas
+- `src/pages/Swap/` — Página principal de swap
+- `src/constants/` — Listas de tokens e cores
+- `src/hooks/` — Hooks customizados para carteira e saldo ERC20
+- `src/context/` — Contexto global de conta
+- `src/components/` — Componentes reutilizáveis
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+## Observações
+- Certifique-se de estar conectado à rede Polygon na MetaMask para interagir com os tokens.
+- O saldo exibido é do token selecionado na carteira conectada.
+- O botão de swap só é habilitado se houver saldo suficiente.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
-```
+## Licença
+MIT

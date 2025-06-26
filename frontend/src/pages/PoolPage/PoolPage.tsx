@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getPool } from '../../services/api';
-import Loading from '../Loading/Loading';
+import Loading from '../../components/Loading/Loading';
 import {
   TaxMonitorContainer,
   TaxMonitorHeader,
@@ -11,7 +11,7 @@ import {
 } from '../TaxMonitor/TaxMonitor.styled';
 import { useTranslation } from 'react-i18next';
 import type { PoolData } from '../../models/PoolData';
-import { Button } from '../ui/Button/Button.styled';
+import { Button } from '../../components/ui/Button/Button.styled';
 import useIsMobile from '@/hooks/useIsMobile';
 import { FirstLastSpan } from './PoolPage.styled';
 

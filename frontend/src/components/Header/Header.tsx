@@ -43,11 +43,11 @@ const Header = () => {
             {t('tax_monitor')}
           </StyledLink>
           <StyledLink
-            to="/brl-swap"
-            isActive={location.pathname === '/brl-swap'}
+            to="/swap"
+            isActive={location.pathname === '/swap'}
             isMobile={isMobile}
           >
-            BRL Swap
+            Swap
           </StyledLink>
         </Nav>
       </LogoContainer>

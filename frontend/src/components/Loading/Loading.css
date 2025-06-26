@@ -3,13 +3,15 @@
   width: 65px;
   aspect-ratio: 1;
   position: relative;
+  
 }
 .loader:before,
 .loader:after {
   content: '';
   position: absolute;
   border-radius: 50px;
-  box-shadow: 0 0 0 3px inset #1a9c9c;
+  box-shadow: 0px 0px 3px 1px #1a9c9c;
+  border: #1a9c9c solid 2px;
   animation: l4 2.5s infinite;
 }
 .loader:after {
