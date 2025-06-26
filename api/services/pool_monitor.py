@@ -1,10 +1,11 @@
 from models.pool import PoolSwapSummary
-from utils.thegraph import get_brl_usd_pool_ids, get_swaps_for_pool, BRL_TOKENS, USD_TOKENS, first_day_of_month_timestamp
+from utils.thegraph import get_pool_by_pair, get_swaps_for_pool, first_day_of_month_timestamp
+from constants.tokens import BRL_TOKENS, USD_TOKENS
 
 class PoolMonitorService:
     def get_brl_usd_swaps(self) -> list[PoolSwapSummary]:
         start_timestamp = first_day_of_month_timestamp()
-        pool_ids = get_brl_usd_pool_ids()
+        pool_ids = get_pool_by_pair(BRL_TOKENS, USD_TOKENS)
         results = []
         for pool_id in pool_ids:
             swaps = get_swaps_for_pool(pool_id, start_timestamp)

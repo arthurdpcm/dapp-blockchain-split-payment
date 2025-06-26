@@ -2,22 +2,12 @@ import requests
 import os
 from dotenv import load_dotenv
 import datetime
-
 load_dotenv()
 
-BRL_TOKENS = [
-    "0xe6a537a407488807f0bbeb0038b79004f19dddfb",  # brla_polygon
-    "0x4ed141110f6eeeaba9a1df36d8c26f684d2475dc",  # brz_polygon
-]
-USD_TOKENS = [
-    "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",  # usdt_polygon
-    "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",  # usdc_polygon
-]
-
-url = f"https://gateway.thegraph.com/api/subgraphs/id/CwpebM66AH5uqS5sreKij8yEkkPcHvmyEs7EwFtdM5ND"
+url = f"https://gateway.thegraph.com/api/subgraphs/id/EsLGwxyeMMeJuhqWvuLmJEiDKXJ4Z6YsoJreUnyeozco"
 headers = {
     "Accept": "application/json",
-    "Authorization": f"Bearer {os.getenv('JWT_API_TOKEN')}",
+    "Authorization": f"Bearer {os.getenv('THEGRAPH_API_TOKEN')}",
 }
 
 def first_day_of_month_timestamp() -> str:
@@ -25,16 +15,16 @@ def first_day_of_month_timestamp() -> str:
     first_day = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     return str(int(first_day.timestamp()))
 
-def get_brl_usd_pool_ids():
+def get_pool_by_pair(tokens0_in=None, tokens1_in=None):
     pool_ids = set()
-    for brl in BRL_TOKENS:
-        for usd in USD_TOKENS:
+    for token0 in tokens0_in:
+        for token1 in tokens1_in:
             query = f"""
             {{
               pools(
                 where: {{
-                  token0_in: [\"{brl}\", \"{usd}\"],
-                  token1_in: [\"{brl}\", \"{usd}\"]
+                  token0_in: [\"{token0}\", \"{token1}\"],
+                  token1_in: [\"{token0}\", \"{token1}\"]
                 }}
               ) {{
                 id
@@ -53,7 +43,7 @@ def get_brl_usd_pool_ids():
                 elif "errors" in json_data:
                   print(json_data["errors"][0]["message"])
             else:
-                print(f"Error querying The Graph for pair {brl}/{usd}: {response.text}")
+                print(f"Error querying The Graph for pair {token0}/{token1}: {response.text}")
     return pool_ids
 
 def get_swaps_for_pool(pool_id, start_timestamp):
@@ -99,3 +89,42 @@ def get_swaps_for_pool(pool_id, start_timestamp):
         else:
             break
     return all_swaps
+  
+  
+def get_quote(token_in: str, token_out: str):
+    # graphql to get the pool id with the highest volume for the given token pair and return the token0Price and token1Price
+    
+    query = f"""
+    {{
+      pools(
+        orderBy: liquidity,
+        orderDirection: desc,
+        where:{{
+          token0_in: [\"{token_in}\", \"{token_out}\"],
+          token1_in: [\"{token_in}\", \"{token_out}\"]
+        }}
+      ) {{
+        id
+        token0Price
+        token1Price
+        feeTier
+      }}
+    }}
+    """
+    
+    response = requests.post(url, json={"query": query}, headers=headers)
+    if response.ok:
+        json_data = response.json()
+        if "data" in json_data and "pools" in json_data["data"]:
+            pools = json_data["data"]["pools"]
+            if pools:
+                pool = pools[0]
+                return {
+                    "pool_id": pool["id"],
+                    "token0Price": pool["token0Price"],
+                    "token1Price": pool["token1Price"],
+                    "feeTier": pool["feeTier"]
+                }
+    print(f"Error querying The Graph for quote: {response.text}")
+    # If no pool found or error, return None
+    return None

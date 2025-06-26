@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import pools
+from routers import pools, quote
 from services.pool_scheduler import start_scheduler
 
 app = FastAPI()
@@ -14,5 +14,6 @@ app.add_middleware(
 )
 
 app.include_router(pools.router)
+app.include_router(quote.router)
 
 start_scheduler()
