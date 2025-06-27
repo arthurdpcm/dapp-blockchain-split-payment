@@ -3,7 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import pools, quote
 from services.pool_scheduler import start_scheduler
 
-app = FastAPI()
+app = FastAPI(
+    title="Split Payment Service API",
+    description="API to support the Split Payment DApp by providing off-chain data like token quotes from Uniswap V3.",
+    version="1.0.0",
+)
 
 app.add_middleware(
     CORSMiddleware,

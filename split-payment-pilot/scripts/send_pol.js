@@ -3,7 +3,7 @@ const hre = require("hardhat");
 async function main() {
   // 1. Endereços e valor
   const senderAddress = "0x14dC79964da2C08b23698B3D3cc7Ca32193d9955";
-  const recipientAddress = ""// your address or recipient's address
+  const recipientAddress ="0x1e9d18eE6256306bB12c95aE502594567e2AE735"; 
   const amountToSend = hre.ethers.parseEther("1000"); // Enviando 10 POL (MATIC)
 
   // 2. Personificar a conta remetente
@@ -15,6 +15,8 @@ async function main() {
   const senderSigner = await hre.ethers.getSigner(senderAddress);
 
   // 3. Verificar saldos antes (opcional)
+  const senderBalance = await hre.ethers.provider.getBalance(senderAddress);
+  console.log(`Saldo do remetente ANTES: ${hre.ethers.formatEther(senderBalance)} POL`);
   const balanceBefore = await hre.ethers.provider.getBalance(recipientAddress);
   console.log(`Saldo do destinatário ANTES: ${hre.ethers.formatEther(balanceBefore)} POL`);
 
