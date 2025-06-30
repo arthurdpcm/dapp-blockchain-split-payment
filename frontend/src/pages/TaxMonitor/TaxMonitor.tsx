@@ -5,13 +5,11 @@ import { useEffect } from 'react';
 import type { BrlUsdSwapsByPool } from '../../models/BrlUsdSwapsByPool';
 import Loading from '../../components/Loading/Loading';
 import {
-  TaxMonitorContainer,
   TaxMonitorDescription,
   TaxMonitorDetailTitle,
   TaxMonitorDivider,
   TaxMonitorHeader,
   TaxMonitorRow,
-  TaxMonitorTitle,
   TaxMonitorTotal,
   TaxMonitorTable,
   TaxMonitorTableHead,
@@ -23,6 +21,7 @@ import Button from '../../components/ui/Button/Button';
 import useIsMobile from '../../hooks/useIsMobile';
 import { AccountContext } from '../../context/AccountContext';
 import { useTranslation } from 'react-i18next';
+import Container from '@/components/Container/Container';
 
 function formatBRL(value: number) {
   return value.toLocaleString('en-US', {
@@ -97,6 +96,12 @@ const TaxMonitor = () => {
     });
   };
 
+  const totalTransacted = brlUsdSwapsByPool.reduce(
+    (acc, pool) => acc + pool.total_brl_to_usd,
+    0
+  );
+  
+
   return isLoading ? (
     <div
       style={{
@@ -112,9 +117,9 @@ const TaxMonitor = () => {
       <Loading />
     </div>
   ) : (
-    <TaxMonitorContainer>
+    <Container title={(
       <TaxMonitorHeader>
-        <TaxMonitorTitle>{t('tax_monitor')}</TaxMonitorTitle>
+        {t('tax_monitor')}
         <Button
           onClick={handleGetBrlUsdSwapsByPool}
           title={t('refresh')}
@@ -126,22 +131,22 @@ const TaxMonitor = () => {
           <RefreshIcon size={'2rem'} />
         </Button>
       </TaxMonitorHeader>
+    )} maxWidth="800px">
+      
       <TaxMonitorDescription>
         {t('total_transacted')} ({new Date().getMonth() + 1}):
       </TaxMonitorDescription>
       <TaxMonitorTotal>
-        {formatBRL(brlUsdSwapsByPool.reduce((acc, pool) => acc + pool.total_brl_to_usd, 0))}
+        {formatBRL(totalTransacted)}
       </TaxMonitorTotal>
       <TaxMonitorDivider>
         <TaxMonitorRow
           style={{ cursor: 'pointer' }}
-          onClick={() => window.location.replace('meu tcc')}
+          onClick={() => window.location.replace('about')}
         >
           <span>{t('tax')}</span>
           <span style={{ color: COLORS.oceanBlue }}>
-            {formatBRL(
-              brlUsdSwapsByPool.reduce((acc, pool) => acc + pool.total_brl_to_usd, 0) * 0.035
-            )}
+            {formatBRL(totalTransacted * 0.011)}
           </span>
         </TaxMonitorRow>
         <div style={{ marginTop: 18 }}>
@@ -170,7 +175,7 @@ const TaxMonitor = () => {
           </TaxMonitorTable>
         </div>
       </TaxMonitorDivider>
-    </TaxMonitorContainer>
+    </Container>
   );
 };
 

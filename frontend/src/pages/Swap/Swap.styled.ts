@@ -1,30 +1,6 @@
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 
-export const Container = styled.div`
-  background: 'transparent';
-  color: #333;
-  border-radius: 12px;
-  padding: 1.5rem 1.2rem;
-  margin: 4.5rem auto 0 auto;
-  max-width: 380px;
-  width: 100%;
-  box-shadow: 0px 0px 24px rgb(26, 156, 156);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  transition: box-shadow 0.3s;
-  color: ${COLORS.lightGray};
-  border: ${COLORS.oceanBlue} 1px solid;
-
-  @media (min-width: 1024px) {
-    max-width: 480px;
-    padding: 2rem 2.5rem;
-    border-radius: 16px;
-  }
-`;
-
 export const SwapBox = styled.div`
   border-radius: 16px;
   padding: 1.2rem 1.5rem;
@@ -151,24 +127,4 @@ export const InfoBar = styled.div`
   display: flex;
   align-items: center;
   gap: 0.7rem;
-`;
-
-export const Title = styled.h1`
-  color: ${COLORS.white};
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  text-align: center;
-  @media (max-width: 600px) {
-    font-size: 1.5rem;
-    margin-bottom: 0.8rem;
-  }
-  @media (max-width: 400px) {
-    font-size: 1.3rem;
-    margin-bottom: 0.6rem;
-  }
-  @media (max-width: 300px) {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
 `;

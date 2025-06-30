@@ -7,27 +7,34 @@ import {
   ModalText,
   ModalTitle,
 } from './Modal.styled';
+import React from 'react';
 
 export default function Modal({
   open,
-  onClose,
   onConfirm,
+  onClose,
+  title,
+  children, 
 }: {
   open: boolean;
-  onClose: () => void;
   onConfirm: () => void;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode; 
 }) {
   const { t } = useTranslation();
 
   if (!open) return null;
+
   return (
-    <ModalContainer>
-      <ModalContent>
-        <ModalTitle>{t("disconnect_wallet_modal_title")}</ModalTitle>
-        <ModalText>{t("disconnect_wallet_modal_question")}</ModalText>
+
+    <ModalContainer onClick={onClose}>
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        <ModalTitle>{title}</ModalTitle>
+        <ModalText>{children}</ModalText>
         <ModalButtonContainer>
           <Button
-            onClick={onClose}
+            onClick={onClose} 
             isMobile={false}
             isConnect={false}
             hasBorder={true}

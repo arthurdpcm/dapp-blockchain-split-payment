@@ -20,7 +20,7 @@ export const LogoContainer = styled.div`
 export const Title = styled.div<{ isMobile: boolean }>`
   font-weight: semibold;
   font-size: ${({ isMobile }) => (isMobile ? '1.2rem' : '2rem')};
-  color: ${COLORS.oceanBlue};
+  color: ${COLORS.lightOceanBlue};
   transition: all 0.2s;
 `;
 

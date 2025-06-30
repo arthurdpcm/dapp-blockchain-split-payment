@@ -2,31 +2,6 @@
 import styled from 'styled-components';
 import { COLORS } from '../../constants/colors';
 
-export const TaxMonitorContainer = styled.div`
-  background: 'transparent';
-  color: #333;
-  border-radius: 12px;
-  padding: 1.5rem 1.2rem;
-  margin: 4.5rem auto 0 auto;
-  max-width: 380px;
-  width: 100%;
-  box-shadow: 0px 0px 24px rgb(26, 156, 156);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  transition: box-shadow 0.3s;
-  color: ${COLORS.lightGray};
-  border: ${COLORS.oceanBlue} 1px solid;
-
-  @media (min-width: 1024px) {
-    max-width: 600px;
-    padding: 2rem 2.5rem;
-    margin-top: 5.5rem;
-    border-radius: 16px;
-  }
-`;
-
 export const TaxMonitorHeader = styled.div`
   display: flex;
   align-items: center;
@@ -37,12 +12,6 @@ export const TaxMonitorHeader = styled.div`
 export const TaxMonitorDescription = styled.p`
   font-size: 1.2rem;
   overflow-wrap: anywhere;
-`;
-
-export const TaxMonitorTitle = styled.h1`
-  color: ${COLORS.oceanBlue};
-  font-weight: 500;
-  font-size: 2rem;
 `;
 
 export const TaxMonitorRefreshBtn = styled.button`

@@ -1,84 +1,22 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import en from './constants/locales/en.json';
+import pt from './constants/locales/pt.json';
 
 i18n.use(initReactI18next).init({
   resources: {
     en: {
-      translation: {
-        tax_monitor: 'Tax Monitor',
-        total_transacted: 'Total transacted between BRL and USD stablecoins in the current month',
-        total_swaps: 'Total swaps made in the current month',
-        tax: 'Tax (3.5%)',
-        details: 'Pools details by pair:',
-        loading: 'Loading, please wait...',
-        connect_wallet: 'Connect Wallet',
-        disconnect_wallet: 'Disconnect Wallet',
-        swap: 'Swap',
-        swap_brl_usd: 'Swap BRL/USD',
-        your_balance: 'Your Balance',
-        amount: 'Amount',
-        confirm: 'Confirm',
-        cancel: 'Cancel',
-        refresh: 'Refresh',
-        error: 'An error occurred',
-        success: 'Operation successful',
-        pair: 'Pair',
-        total: 'Total',
-        previous: 'Previous',
-        next: 'Next',
-        first: 'First',
-        last: 'Last',
-        split_payment_swap: 'Split Payment Swap',
-        sell: 'Sell',
-        buy: 'Buy',
-        insufficient_symbol: 'Insufficient {{symbol}}',
-        insufficient_symbol_for_swap: 'Insufficient {{symbol}} for swap',
-        pool_fee: 'Pool Fee',
-        pool_fee_description: 'The fee charged by the pool for the swap operation.',
-        select_token: 'Select token',
-        disconnect_wallet_modal_title: 'Disconnect Wallet',
-        disconnect_wallet_modal_question: 'Are you sure you want to disconnect your wallet?',
-      },
+      translation: en, // Use o objeto importado diretamente
     },
     pt: {
-      translation: {
-        tax_monitor: 'Monitor de Taxas',
-        total_transacted: 'Total transacionado entre BRL e USD stablecoins no mês atual',
-        total_swaps: 'Total de swaps realizadas no mês atual',
-        tax: 'Taxa (3,5%)',
-        details: 'Detalhamento de pools por par:',
-        loading: 'Carregando, por favor aguarde...',
-        connect_wallet: 'Conectar Carteira',
-        disconnect_wallet: 'Desconectar Carteira',
-        swap: 'Trocar',
-        swap_brl_usd: 'Trocar BRL/USD',
-        your_balance: 'Seu Saldo',
-        amount: 'Quantidade',
-        confirm: 'Confirmar',
-        cancel: 'Cancelar',
-        refresh: 'Atualizar',
-        error: 'Ocorreu um erro',
-        success: 'Operação realizada com sucesso',
-        pair: 'Par',
-        total: 'Total',
-        previous: 'Anterior',
-        next: 'Próximo',
-        first: 'Primeira',
-        last: 'Última',
-        split_payment_swap: 'Swap Split Payment',
-        sell: 'Vender',
-        buy: 'Comprar',
-        insufficient_symbol_for_swap: '{{symbol}} insuficiente para swap',
-        pool_fee: 'Taxa do Pool',
-        pool_fee_description: 'A taxa cobrada pelo pool para a operação de swap.',
-        select_token: 'Selecionar token',
-        disconnect_wallet_modal_title: 'Desconectar Carteira',
-        disconnect_wallet_modal_question: 'Você tem certeza que deseja desconectar sua carteira?',
-      },
+      translation: pt, 
     },
   },
-  lng: 'en', // default language
-  fallbackLng: 'en', // fallback language
+  lng: 'pt', // idioma padrão
+  fallbackLng: 'en', // idioma de fallback
+  interpolation: {
+    escapeValue: false, // React já faz o escape
+  },
 });
 
 export default i18n;

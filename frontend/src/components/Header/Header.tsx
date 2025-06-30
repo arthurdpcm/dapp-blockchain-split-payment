@@ -17,18 +17,13 @@ const Header = () => {
   const location = useLocation();
   const isMobile = useIsMobile();
   const { account, connect, disconnect } = useWallet();
-  const [modalOpen, setModalOpen] = useState(false);
   const { t } = useTranslation();
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleAddressClick = () => {
     setModalOpen(true);
   };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-  };
-
-  const handleModalConfirm = () => {
+  const handleDisconnectConfirm = () => {
     disconnect();
     setModalOpen(false);
   };
@@ -48,6 +43,20 @@ const Header = () => {
             isMobile={isMobile}
           >
             Swap
+          </StyledLink>
+          <StyledLink
+            to="/contract-monitor"
+            isActive={location.pathname === '/contract-monitor'}
+            isMobile={isMobile}
+          >
+            Contract Monitor
+          </StyledLink>
+          <StyledLink
+            to="/about"
+            isActive={location.pathname === '/about'}
+            isMobile={isMobile}
+          >
+            About
           </StyledLink>
         </Nav>
       </LogoContainer>
@@ -76,7 +85,14 @@ const Header = () => {
           </Button>
         )}
       </RightNav>
-      <Modal open={modalOpen} onClose={handleModalClose} onConfirm={handleModalConfirm} />
+      <Modal
+        open={modalOpen}
+        onConfirm={handleDisconnectConfirm}
+        onClose={() => setModalOpen(false)}
+        title={t('disconnect_wallet_modal_title')}
+      >
+        {t('disconnect_wallet_modal_question')}
+      </Modal>
     </HeaderContainer>
   );
 };

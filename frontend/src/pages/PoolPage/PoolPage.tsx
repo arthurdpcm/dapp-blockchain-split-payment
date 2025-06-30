@@ -3,9 +3,6 @@ import { useEffect, useState } from 'react';
 import { getPool } from '../../services/api';
 import Loading from '../../components/Loading/Loading';
 import {
-  TaxMonitorContainer,
-  TaxMonitorHeader,
-  TaxMonitorTitle,
   TaxMonitorDescription,
   TaxMonitorTotal,
 } from '../TaxMonitor/TaxMonitor.styled';
@@ -14,6 +11,7 @@ import type { PoolData } from '../../models/PoolData';
 import { Button } from '../../components/ui/Button/Button.styled';
 import useIsMobile from '@/hooks/useIsMobile';
 import { FirstLastSpan } from './PoolPage.styled';
+import Container from '@/components/Container/Container';
 
 function formatDate(timestamp: string) {
   const date = new Date(Number(timestamp) * 1000);
@@ -54,14 +52,9 @@ const PoolPage = () => {
 
   if (!pool) {
     return (
-      <TaxMonitorContainer>
-        <TaxMonitorHeader>
-          <TaxMonitorTitle>
-            {t('pair')}: {id}
-          </TaxMonitorTitle>
-        </TaxMonitorHeader>
+      <Container title={`${t('pair')}: ${id}`} maxWidth="800px">
         <TaxMonitorDescription>{t('error')}: Pool not found.</TaxMonitorDescription>
-      </TaxMonitorContainer>
+      </Container>
     );
   }
 
@@ -76,12 +69,7 @@ const PoolPage = () => {
   const swapsPage = pool.swaps.slice(startIdx, endIdx);
 
   return (
-    <TaxMonitorContainer>
-      <TaxMonitorHeader>
-        <TaxMonitorTitle>
-          {token0} / {token1}
-        </TaxMonitorTitle>
-      </TaxMonitorHeader>
+    <Container title={`${token0} / ${token1}`} maxWidth="800px">
       <TaxMonitorDescription>
         {t('total_swaps')} ({new Date().getMonth() + 1}):
       </TaxMonitorDescription>
@@ -177,7 +165,7 @@ const PoolPage = () => {
           <FirstLastSpan>{">>"}</FirstLastSpan>
         </Button>
       </div>
-    </TaxMonitorContainer>
+    </Container>
   );
 };
 
