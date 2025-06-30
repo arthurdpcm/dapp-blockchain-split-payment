@@ -1,5 +1,6 @@
 const hre = require("hardhat");
 const fs = require("fs");
+const path = require("path");
 
 async function main() {
   const [owner, taxWallet] = await hre.ethers.getSigners();
@@ -25,7 +26,8 @@ async function main() {
   const SplitPayment = await hre.ethers.getContractFactory("SplitPayment");
   const splitPayment = await SplitPayment.deploy(
     taxWallet.address,
-    [tokenA.target] // lista de stablecoins
+    [tokenA.target],
+    uniswapRouter
   );
   await splitPayment.waitForDeployment();
   console.log("SplitPayment:", splitPayment.target);
@@ -38,10 +40,23 @@ async function main() {
     TokenA: tokenA.target,
     TokenB: tokenB.target,
     SplitPayment: splitPayment.target,
-    UniswapRouter: uniswapRouter
+    TaxWallet: taxWallet.address,
   };
 
   fs.writeFileSync('./contract-addresses.json', JSON.stringify(contractAddresses, null, 2));
+
+  // Ensure the directory exists before writing the file
+  
+  const contractsDir = path.resolve(__dirname, '../../frontend/src/constants');
+  if (!fs.existsSync(contractsDir)) {
+    fs.mkdirSync(contractsDir, { recursive: true });
+  }
+  fs.writeFileSync(path.join(contractsDir, 'contracts-addresses.json'), JSON.stringify(contractAddresses, null, 2));
+  // get abi of splitPayment contract and token contract from artifacts folder and save in frontend/src/constants
+  const splitPaymentAbi = fs.readFileSync(path.join(__dirname, '../artifacts/contracts/SplitPayment.sol/SplitPayment.json'), 'utf8');
+  const tokenAbi = fs.readFileSync(path.join(__dirname, '../artifacts/contracts/Token.sol/Token.json'), 'utf8');
+  fs.writeFileSync(path.join(contractsDir, '/abi/SplitPayment.json'), splitPaymentAbi);
+  fs.writeFileSync(path.join(contractsDir, '/abi/Token.json'), tokenAbi);
   console.log("✅ Endereços salvos em contract-addresses.json");
 }
 

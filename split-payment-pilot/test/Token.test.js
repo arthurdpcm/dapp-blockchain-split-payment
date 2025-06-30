@@ -8,7 +8,7 @@ describe("Token", function () {
     const symbol = "TTK";
 
     beforeEach(async function () {
-        [owner, addr1, addr2] = await ethers.getSigners();
+        [owner, _, _, addr1, addr2] = await ethers.getSigners();
         const Token = await ethers.getContractFactory("Token");
         token = await Token.deploy(name, symbol, initialSupply);
         await token.waitForDeployment();

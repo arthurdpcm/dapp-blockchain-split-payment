@@ -6,19 +6,17 @@ async function main() {
   const addresses = require("../contract-addresses.json");
   const EURE_ADDRESS = "0x18ec0A6E18E5bc3784fDd3a3634b31245ab704F6"; // EURE on Polygon
   const USDC_ADDRESS = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"; // USDC on Polygon
-  const UNISWAP_ROUTER_ADDRESS = "0xE592427A0AEce92De3Edee1F18E0157C05861564"; // Uniswap V3 Router
   const EURE_WHALE_ADDRESS = "0xBA12222222228d8Ba445958a75a0704d566BF2C8"; // A known account with a lot of EURE
 
   // --- INITIALIZATION ---
   console.log("Initializing script...");
-  const [owner, taxWallet, user, recipient] = await ethers.getSigners();
+  const [owner, taxWallet, user] = await ethers.getSigners();
   const splitPayment = await ethers.getContractAt("SplitPayment", addresses.SplitPayment);
   const eure = await ethers.getContractAt("Token", EURE_ADDRESS);
 
   console.log("Owner address:          ", owner.address);
   console.log("Tax Wallet address:     ", await splitPayment.taxWallet());
   console.log("User address:           ", user.address);
-  console.log("Recipient address:      ", recipient.address);
   console.log("SplitPayment contract:  ", splitPayment.target);
   console.log("EURE token contract:    ", eure.target);
 
@@ -59,9 +57,7 @@ async function main() {
       EURE_ADDRESS,
       amountIn,
       USDC_ADDRESS,
-      recipient.address,
-      fee,
-      UNISWAP_ROUTER_ADDRESS
+      fee
     );
     console.log("Transaction sent! Hash:", tx.hash);
     await tx.wait();
@@ -74,7 +70,7 @@ async function main() {
   console.log("\n--- Final Balances ---");
   const usdc = await ethers.getContractAt("Token", USDC_ADDRESS);
   console.log(`User's EURE balance:      ${ethers.formatUnits(await eure.balanceOf(user.address), 18)}`);
-  console.log(`Recipient's USDC balance: ${ethers.formatUnits(await usdc.balanceOf(recipient.address), 6)}`); // USDC has 6 decimals
+  console.log(`User's USDC balance:      ${ethers.formatUnits(await usdc.balanceOf(user.address), 6)}`);
   console.log(`Tax wallet's EURE balance:  ${ethers.formatUnits(await eure.balanceOf(await splitPayment.taxWallet()), 18)}`);
 
 

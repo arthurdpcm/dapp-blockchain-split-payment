@@ -4,12 +4,12 @@ const { ethers, network } = require("hardhat");
 const { impersonateAccount, stopImpersonatingAccount, setBalance } = require("@nomicfoundation/hardhat-network-helpers");
 
 describe("SplitPayment", function () {
-    let owner, taxWallet, user, recipient, other;
+    let owner, taxWallet, user, other;
     let splitPayment;
     let usdc, eure;
     let whaleSigner; // Não precisaremos mais deste se usarmos setBalance
 
-    const taxPercent = 35; // 3.5%
+    const taxPercent = 11; // 3.5%
 
     const uniswapRouter = "0xE592427A0AEce92De3Edee1F18E0157C05861564";
 
@@ -23,7 +23,7 @@ describe("SplitPayment", function () {
     const fee = 3000; // 0.3%
 
     before(async function () {
-        [owner, taxWallet, user, recipient, other] = await ethers.getSigners();
+        [owner, taxWallet, user, other] = await ethers.getSigners();
 
         usdc = await ethers.getContractAt("Token", USDC_ADDRESS);
         eure = await ethers.getContractAt("Token", EURE_ADDRESS);
@@ -44,7 +44,8 @@ describe("SplitPayment", function () {
         const SplitPayment = await ethers.getContractFactory("SplitPayment");
         splitPayment = await SplitPayment.deploy(
             taxWallet.address,
-            [EURE_ADDRESS]
+            [EURE_ADDRESS],
+            uniswapRouter
         );
         await splitPayment.waitForDeployment();
     });
@@ -70,23 +71,21 @@ describe("SplitPayment", function () {
             await eure.connect(user).approve(splitPayment.target, amountIn);
 
             const taxWalletInitial = await eure.balanceOf(taxWallet.address);
-            const recipientInitial = await usdc.balanceOf(recipient.address);
+            const userInitial = await usdc.balanceOf(user.address);
 
             await expect(
                 splitPayment.connect(user).splitAndSwapPayment(
                     EURE_ADDRESS,
                     amountIn,
                     USDC_ADDRESS,
-                    recipient.address,
-                    fee,
-                    uniswapRouter
+                    fee
                 )
             ).to.emit(splitPayment, "PaymentSplit");
             const taxWalletFinal = await eure.balanceOf(taxWallet.address);
-            const recipientFinal = await usdc.balanceOf(recipient.address);
+            const userWalletFinal = await usdc.balanceOf(user.address);
 
             expect(taxWalletFinal - taxWalletInitial).to.equal(taxAmount);
-            expect(recipientFinal).to.be.gt(recipientInitial);
+            expect(userWalletFinal).to.be.gt(userInitial);
         });
 
         it('should revert if tokenIn is zero address', async function () {
@@ -96,9 +95,7 @@ describe("SplitPayment", function () {
                     ethers.ZeroAddress,
                     amountIn,
                     EURE_ADDRESS,
-                    recipient.address,
-                    fee,
-                    uniswapRouter
+                    fee
                 )
             ).to.be.revertedWith("Token address cannot be the zero address");
         });
@@ -109,39 +106,9 @@ describe("SplitPayment", function () {
                     EURE_ADDRESS,
                     0,
                     USDC_ADDRESS,
-                    recipient.address,
-                    fee,
-                    uniswapRouter
+                    fee
                 )
             ).to.be.revertedWith("Amount must be greater than 0");
-        });
-
-        it('should revert if recipient address is zero address', async function () {
-            const amountIn = ethers.parseUnits("1", 6);
-            await expect(
-                splitPayment.connect(user).splitAndSwapPayment(
-                    EURE_ADDRESS,
-                    amountIn,
-                    USDC_ADDRESS,
-                    ethers.ZeroAddress,
-                    fee,
-                    uniswapRouter
-                )
-            ).to.be.revertedWith("Recipient address cannot be the zero address");
-        });
-
-        it('should revert if Uniswap router is zero address', async function () {
-            const amountIn = ethers.parseUnits("1", 6);
-            await expect(
-                splitPayment.connect(user).splitAndSwapPayment(
-                    EURE_ADDRESS,
-                    amountIn,
-                    USDC_ADDRESS,
-                    recipient.address,
-                    fee,
-                    ethers.ZeroAddress
-                )
-            ).to.be.revertedWith("Uniswap router cannot be the zero address");
         });
 
         it("should revert if tokenIn is not a valid stablecoin", async function () {
@@ -153,9 +120,7 @@ describe("SplitPayment", function () {
                     nonStablecoinAddress,
                     amountIn,
                     EURE_ADDRESS,
-                    recipient.address,
-                    fee,
-                    uniswapRouter
+                    fee
                 )
             ).to.be.revertedWith("Token is not a valid stablecoin");
         });
@@ -261,6 +226,26 @@ describe("SplitPayment", function () {
             await splitPayment.removeValidStablecoin(EURE_ADDRESS);
             const stablecoins = await splitPayment.getValidStablecoins();
             expect(stablecoins.length).to.equal(0);
+        });
+    });
+
+    describe("setUniswapRouter", function () {
+        it("should allow only owner to set Uniswap router", async function () {
+            await expect(
+                splitPayment.connect(user).setUniswapRouter(other.address)
+            ).to.be.revertedWith("Only the owner can call this function.");
+
+            await expect(
+                splitPayment.setUniswapRouter(other.address)
+            ).to.not.be.reverted;
+
+            expect(await splitPayment.uniswapRouter()).to.equal(other.address);
+        });
+
+        it("should revert if Uniswap router address is zero", async function () {
+            await expect(
+                splitPayment.setUniswapRouter(ethers.ZeroAddress)
+            ).to.be.revertedWith("Router address cannot be zero");
         });
     });
 });

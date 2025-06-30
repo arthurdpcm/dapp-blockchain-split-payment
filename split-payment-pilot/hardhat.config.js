@@ -8,11 +8,11 @@
         forking: {
           url: process.env.ANVIL_URL || "http://127.0.0.1:8545",
           enabled: true,
-          blockNumber: 73225084, // get from the anvil fork logs
+          blockNumber: 73380550, // get from the anvil fork logs
         },
       },
       anvil: {
-        url: 'http://127.00.0.1:8545',
+        url: 'http://127.0.0.1:8545',
         // chainId: 137, 
       },
     },

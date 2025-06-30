@@ -18,7 +18,6 @@ async function main() {
   const senderBalance = await hre.ethers.provider.getBalance(senderAddress);
   console.log(`Saldo do remetente ANTES: ${hre.ethers.formatEther(senderBalance)} POL`);
   const balanceBefore = await hre.ethers.provider.getBalance(recipientAddress);
-  console.log(`Saldo do destinatário ANTES: ${hre.ethers.formatEther(balanceBefore)} POL`);
 
   // 4. Enviar a transação
   console.log(`Enviando ${hre.ethers.formatEther(amountToSend)} POL para ${recipientAddress}...`);
@@ -29,9 +28,6 @@ async function main() {
   await tx.wait();
   console.log("Transação concluída! Hash:", tx.hash);
 
-  // 5. Verificar saldos depois (opcional)
-  const balanceAfter = await hre.ethers.provider.getBalance(recipientAddress);
-  console.log(`Saldo do destinatário DEPOIS: ${hre.ethers.formatEther(balanceAfter)} POL`);
 
   // 6. Parar de personificar a conta
   await hre.network.provider.request({

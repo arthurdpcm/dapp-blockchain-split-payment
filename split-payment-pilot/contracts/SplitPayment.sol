@@ -5,33 +5,42 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
 import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
 
+import "hardhat/console.sol";
+
 contract SplitPayment {
   using SafeERC20 for IERC20;
 
   address public owner;
   address public taxWallet;
+  address public uniswapRouter; 
   address[] public validStablecoins;
-  uint256 public taxPercentage = 35; // 3,5%
+  uint256 public taxPercentage = 11; // 1,1%
 
   /**
    * @dev Constructor for the SplitPayment contract
    * @param _taxWallet The address of the tax wallet
    * @param _validStablecoins The addresses of the valid stablecoins
+   * @param _uniswapRouter The address of the Uniswap V3 router
    */
-  constructor(address _taxWallet, address[] memory _validStablecoins) {
+  constructor(address _taxWallet, address[] memory _validStablecoins, address _uniswapRouter) {
     owner = msg.sender;
     taxWallet = _taxWallet;
     validStablecoins = _validStablecoins;
+    uniswapRouter = _uniswapRouter;
   }
 
   /**
    * @dev Event emitted when a payment is split
    * @param recipient The address of the recipient
-   * @param amount The amount of the payment
+   * @param tokenIn The address of the input token (ERC20)
+   * @param amountIn The amount in of the payment
+   * @param tokenOut The address of the output token (ERC20)
+   * @param amountOut The amount received after swapping
+   * @param feeTier The Uniswap V3 fee tier used for the swap (e.g., 3000 for 0.3%)
    * @param taxAmount The amount of the tax
    */
-  event PaymentSplit(address indexed recipient, uint256 amount, uint256 taxAmount);
- 
+  event PaymentSplit(address indexed recipient, address tokenIn, uint256 amountIn, address tokenOut, uint256 amountOut, uint24 feeTier, uint256 taxAmount);
+
   /**
    * @dev Modifier to ensure only the owner can call a function
    */
@@ -62,6 +71,11 @@ contract SplitPayment {
 
   function setTaxWallet(address _taxWallet) public onlyOwner {
     taxWallet = _taxWallet;
+  }
+
+  function setUniswapRouter(address _uniswapRouter) public onlyOwner {
+    require(_uniswapRouter != address(0), "Router address cannot be zero");
+    uniswapRouter = _uniswapRouter;
   }
 
   function setTaxPercentage(uint256 _taxPercentage) public onlyOwner {
@@ -109,33 +123,25 @@ contract SplitPayment {
       require(found, "Stablecoin not found in list");
   }
   /**
-   * @dev Split payment, retain tax, then swap net amount and send to recipient
+   * @dev Split payment, retain tax, then swap net amount and send to sender account
    * @param tokenIn Address of the input token (ERC20)
    * @param amountIn Amount of input token
    * @param tokenOut Address of the output token (ERC20)
-   * @param recipient Address to receive the swapped tokens
    * @param feeTier Uniswap V3 fee tier (e.g., 3000 for 0.3%)
-   * @param uniswapRouter Address of the Uniswap V2 router contract
    */
   function splitAndSwapPayment(
       address tokenIn,
       uint256 amountIn,
       address tokenOut,
-      address recipient,
-      uint24 feeTier, // Uniswap V3 fee tier, e.g., 3000 for 0.3%
-      // uint256 amountOutMin,
-      // address[] calldata path,
-      // uint256 deadline,
-      address uniswapRouter
+      uint24 feeTier
   ) external returns (uint256 amountOut){
+      console.log("oi");
       require(amountIn > 0, "Amount must be greater than 0");
-      require(recipient != address(0), "Recipient address cannot be the zero address");
       require(tokenIn != address(0) && tokenOut != address(0), "Token address cannot be the zero address");
       require(uniswapRouter != address(0), "Uniswap router cannot be the zero address");
-
-      // Check if tokenIn is a valid stablecoin
       require(isValidStablecoin(tokenIn), "Token is not a valid stablecoin");
       // Transfer tokens from sender to contract
+      console.log("Transferring %s tokens from %s to contract", amountIn, msg.sender);
       TransferHelper.safeTransferFrom(
           tokenIn,
           msg.sender,
@@ -143,18 +149,18 @@ contract SplitPayment {
           amountIn
       );
       // require(IERC20(tokenIn).transferFrom(msg.sender, address(this), amountIn), "Transfer failed");
-
+      console.log("Transfer successful, amount: %s", amountIn);
       // Calculate tax and net amount
       uint256 taxAmount = (amountIn * taxPercentage) / 1000;
       uint256 netAmount = amountIn - taxAmount;
       // Send tax to taxWallet
       TransferHelper.safeTransfer(tokenIn, taxWallet, taxAmount);
       // require(IERC20(tokenIn).transfer(taxWallet, taxAmount), "Tax transfer failed");
-
+      console.log("Tax of %s sent to tax wallet %s", taxAmount, taxWallet);
       TransferHelper.safeApprove(tokenIn, uniswapRouter, netAmount);
       // Approve Uniswap router to spend netAmount
       // require(IERC20(tokenIn).approve(uniswapRouter, netAmount), "Approve failed");
-
+      console.log("Approved Uniswap router to spend %s tokens", netAmount);
       // Swap netAmount via Uniswap
       ISwapRouter router = ISwapRouter(uniswapRouter);
       // Naively set amountOutMinimum to 0. In production, use an oracle or other data source to choose a safer value for amountOutMinimum.
@@ -164,13 +170,14 @@ contract SplitPayment {
               tokenIn: tokenIn,
               tokenOut: tokenOut,
               fee: feeTier,
-              recipient: recipient,
+              recipient: msg.sender,
               deadline: block.timestamp + 300,
               amountIn: netAmount,
               amountOutMinimum: 0,
               sqrtPriceLimitX96: 0
           });
       amountOut = router.exactInputSingle(params);
-      emit PaymentSplit(recipient, amountIn, taxAmount);
+      console.log("Swapped %s tokens for %s tokens", netAmount, amountOut);
+      emit PaymentSplit(msg.sender, tokenIn, amountIn, tokenOut, amountOut, feeTier, taxAmount);
   }
 }
