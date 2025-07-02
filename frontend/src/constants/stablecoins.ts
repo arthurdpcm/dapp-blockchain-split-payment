@@ -10,10 +10,16 @@ export const BRL_STABLECOINS = [
   },
   { symbol: 'BRZ',
     name: 'Brazilian Digital Token',
-    address: '0x4ed141110f6eeeaba9a1df36d8c26f684d2475dc',
+    address: '0x4ed141110f6eeeaba9a1df36d8c26f684d2475dc', // testnet 
     image: '/brz_logo.png' ,
     decimals: 18
   },
+  // { symbol: 'BRZ_TESTNET',
+  //   name: 'Brazilian Digital Token',
+  //   address: '0x13c90ba1f2cf2818af3e10c94878393683738899', // testnet 
+  //   image: '/brz_logo.png' ,
+  //   decimals: 18
+  // },
   {
     symbol: 'MATIC',
     name: 'Matic Token',
@@ -21,6 +27,13 @@ export const BRL_STABLECOINS = [
     image: '/polygon_logo.png',
     decimals: 18
   },
+  //   {
+  //   symbol: 'POL',
+  //   name: 'Polygon Token',
+  //   address: '0x00000000000000000000000000000000000001010', 
+  //   image: '/polygon_logo.png',
+  //   decimals: 18
+  // },
   {
     symbol: 'EURE',
     name: 'Monerium EUR emoney',
@@ -34,6 +47,12 @@ export const BRL_STABLECOINS = [
     image: '/usdc_logo.png',
     decimals: 6
   },
+  //   { symbol: 'USDC_Testnet',
+  //   name: 'USD Coin',
+  //   address: '0x41e94eb019c0762f9bfcf9fb1e58725bfb0e7582',
+  //   image: '/usdc_logo.png',
+  //   decimals: 6
+  // },
   // {
   //   symbol: 'ETH',
   //   name: 'Ethereum',
@@ -53,7 +72,13 @@ export const USD_STABLECOINS = [
     address: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
     image: '/usdt_logo.png',
     decimals: 6
-  }
+  },
+  // { symbol: 'BRZ_TESTNET',
+  //   name: 'Brazilian Digital Token',
+  //   address: '0x13c90ba1f2cf2818af3e10c94878393683738899', // testnet 
+  //   image: '/brz_logo.png' ,
+  //   decimals: 18
+  // },
 ];
 
 export const STABLECOINS = [

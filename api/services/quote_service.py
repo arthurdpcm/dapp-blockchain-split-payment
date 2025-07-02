@@ -61,6 +61,7 @@ class QuoteService:
             token_in, token_out = self._handle_matic_token(token_in, token_out)
         
         quote = get_quote(token_in, token_out)
+
         
         if not quote:
             print(f"Nenhum pool encontrado para o par {token_in}/{token_out}")
@@ -70,11 +71,18 @@ class QuoteService:
             )
         if is_matic:
             # Se for MATIC, inverte os preços
-            token0Price, token1Price = self._handle_matic_quote(quote["token0Price"], quote["token1Price"])
+            quote["token0Price"], quote["token1Price"] = self._handle_matic_quote(quote["token0Price"], quote["token1Price"])
+        # o token que é passado como token_in deve ser retornado como token0Price
+        # por isso vamos ver a partir do id do token retornado e fazer o mapeamento
+        if token_in == quote["token1id"]:
+            token0_price_temp = float(quote["token0Price"])
+            quote["token0Price"] = float(quote["token1Price"])
+            quote["token1Price"] = token0_price_temp
+        
         response = QuoteResponse(
             pool_id=quote["pool_id"],
-            token0Price=token0Price if is_matic else float(quote["token0Price"]),
-            token1Price=token1Price if is_matic else float(quote["token1Price"]),
+            token0Price=quote["token0Price"],
+            token1Price=quote["token1Price"],
             fee_tier=int(quote["feeTier"])
         )
         return response

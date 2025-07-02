@@ -61,7 +61,7 @@ const Swap: React.FC = () => {
       setIsQuoteLoading(true);
       const data = await getQuote(tokenIn.address, tokenOut.address);
       setQuoteData({
-        rate: data.token0Price || 0,
+        rate: data.token1Price || 0,
         fee: data.feeTier || 0,
       });
       setIsQuoteLoading(false);
@@ -95,7 +95,8 @@ const Swap: React.FC = () => {
   const handleConfirmSwap = async () => {
     setIsConfirmModalOpen(false);
     
-    if (!account || !tokenIn.address || !tokenOut.address || amount0AsNumber <= 0 || !quoteData) {
+    if (!account || !tokenIn.address || !tokenOut.address || amount0AsNumber <= 0) {
+      alert(t('swap_error_invalid_input'));
       return;
     }
     setIsSwapLoading(true);
@@ -104,7 +105,7 @@ const Swap: React.FC = () => {
         tokenInAddress: tokenIn.address,
         tokenOutAddress: tokenOut.address,
         amountIn: amount0,
-        fee: quoteData.fee,
+        fee: 500,
         tokenInDecimals: tokenIn.decimals
       });
 

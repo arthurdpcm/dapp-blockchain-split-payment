@@ -4,7 +4,7 @@ async function main() {
   // 1. Endereços e valor
   const senderAddress = "0x14dC79964da2C08b23698B3D3cc7Ca32193d9955";
   const recipientAddress ="0x1e9d18eE6256306bB12c95aE502594567e2AE735"; 
-  const amountToSend = hre.ethers.parseEther("1000"); // Enviando 10 POL (MATIC)
+  const amountToSend = hre.ethers.parseEther("3000"); // Enviando 10 POL (MATIC)
 
   // 2. Personificar a conta remetente
   console.log(`Personificando ${senderAddress}...`);

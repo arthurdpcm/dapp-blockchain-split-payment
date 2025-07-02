@@ -8,7 +8,6 @@ router = APIRouter()
 def get_quote(tokenIn: str, tokenOut: str):
     quote_service_singleton = quote_service.QuoteService()
     data = quote_service_singleton.get_quote_service(tokenIn, tokenOut)
-    print(data)
     if not data:
         return JSONResponse(status_code=404, content={"message": "Quote not found"})
     return JSONResponse(content=data.model_dump())

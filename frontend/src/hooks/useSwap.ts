@@ -95,7 +95,6 @@ export function useSwap() {
       setError(errorMsg);
       return { txHash: null, error: errorMsg }; // Retorna um objeto de erro
     }
-
     setIsSwapping(true);
     setError(null);
     setTxHash(null);

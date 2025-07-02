@@ -72,7 +72,7 @@ def get_swaps_for_pool(pool_id, start_timestamp):
         variables = {"startTimestamp": start_timestamp, "lastId": last_id}
         resp = requests.post(url, json={"query": query, "variables": variables}, headers=headers)
         if resp.ok:
-            data = resp.json()
+            data = resp.json()  
             swaps = []
             if (
                 "data" in data and data["data"] and
@@ -106,7 +106,9 @@ def get_quote(token_in: str, token_out: str):
       ) {{
         id
         token0Price
+        token0 {{id}}
         token1Price
+        token1 {{id}}
         feeTier
       }}
     }}
@@ -121,7 +123,9 @@ def get_quote(token_in: str, token_out: str):
                 pool = pools[0]
                 return {
                     "pool_id": pool["id"],
+                    "token0id": pool["token0"]["id"],
                     "token0Price": pool["token0Price"],
+                    "token1id": pool["token1"]["id"],
                     "token1Price": pool["token1Price"],
                     "feeTier": pool["feeTier"]
                 }

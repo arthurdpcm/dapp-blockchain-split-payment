@@ -6,16 +6,16 @@ import pt from './constants/locales/pt.json';
 i18n.use(initReactI18next).init({
   resources: {
     en: {
-      translation: en, // Use o objeto importado diretamente
+      translation: en, 
     },
     pt: {
       translation: pt, 
     },
   },
-  lng: 'pt', // idioma padrão
-  fallbackLng: 'en', // idioma de fallback
+  lng: 'pt',
+  fallbackLng: 'en',
   interpolation: {
-    escapeValue: false, // React já faz o escape
+    escapeValue: false, 
   },
 });
 

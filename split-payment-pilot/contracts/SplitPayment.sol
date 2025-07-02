@@ -5,8 +5,6 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
 import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
 
-import "hardhat/console.sol";
-
 contract SplitPayment {
   using SafeERC20 for IERC20;
 
@@ -135,32 +133,24 @@ contract SplitPayment {
       address tokenOut,
       uint24 feeTier
   ) external returns (uint256 amountOut){
-      console.log("oi");
       require(amountIn > 0, "Amount must be greater than 0");
       require(tokenIn != address(0) && tokenOut != address(0), "Token address cannot be the zero address");
       require(uniswapRouter != address(0), "Uniswap router cannot be the zero address");
       require(isValidStablecoin(tokenIn), "Token is not a valid stablecoin");
       // Transfer tokens from sender to contract
-      console.log("Transferring %s tokens from %s to contract", amountIn, msg.sender);
       TransferHelper.safeTransferFrom(
           tokenIn,
           msg.sender,
           address(this),
           amountIn
       );
-      // require(IERC20(tokenIn).transferFrom(msg.sender, address(this), amountIn), "Transfer failed");
-      console.log("Transfer successful, amount: %s", amountIn);
       // Calculate tax and net amount
       uint256 taxAmount = (amountIn * taxPercentage) / 1000;
       uint256 netAmount = amountIn - taxAmount;
       // Send tax to taxWallet
       TransferHelper.safeTransfer(tokenIn, taxWallet, taxAmount);
-      // require(IERC20(tokenIn).transfer(taxWallet, taxAmount), "Tax transfer failed");
-      console.log("Tax of %s sent to tax wallet %s", taxAmount, taxWallet);
+
       TransferHelper.safeApprove(tokenIn, uniswapRouter, netAmount);
-      // Approve Uniswap router to spend netAmount
-      // require(IERC20(tokenIn).approve(uniswapRouter, netAmount), "Approve failed");
-      console.log("Approved Uniswap router to spend %s tokens", netAmount);
       // Swap netAmount via Uniswap
       ISwapRouter router = ISwapRouter(uniswapRouter);
       // Naively set amountOutMinimum to 0. In production, use an oracle or other data source to choose a safer value for amountOutMinimum.
@@ -177,7 +167,6 @@ contract SplitPayment {
               sqrtPriceLimitX96: 0
           });
       amountOut = router.exactInputSingle(params);
-      console.log("Swapped %s tokens for %s tokens", netAmount, amountOut);
       emit PaymentSplit(msg.sender, tokenIn, amountIn, tokenOut, amountOut, feeTier, taxAmount);
   }
 }

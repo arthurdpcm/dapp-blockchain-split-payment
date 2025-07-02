@@ -63,5 +63,16 @@
   "feature_tax": "Recolhimento de Impostos: Cálculo e transferência automática de uma porcentagem do valor para uma carteira de impostos.",
   "feature_monitoring": "Monitoramento On-Chain: Páginas dedicadas para visualizar o balanço do contrato e os eventos de pagamento emitidos.",
   "feature_security": "Segurança: Funções administrativas protegidas, permitindo que apenas o proprietário do contrato realize alterações críticas.",
-  "author_info": "Desenvolvido por Arthur Duarte como Trabalho de Conclusão de Curso (TCC) para o CEFET/RJ."
+  "author_info": "Desenvolvido por Arthur Duarte como Trabalho de Conclusão de Curso (TCC) para o CEFET/RJ.",
+  "swap_more_info": "Para mais informações sobre o swap, ",
+  "click_here": "clique aqui.",
+  "estimated_gas": "Gás Estimado",
+  "estimate_gas": "Estimar taxa de Gás",
+  "estimating": "Estimando...",
+  "contract_fee": "Taxa do Contrato",
+  "uniswap_pool_fee": "Taxa do Pool Uniswap",
+  "gas_fee_estimate": "Taxa de Gás (Estimada)",
+  "gas_fee": "Taxa de Gás",
+  "contract_monitor_header": "Monitor do Contrato",
+  "about": "Sobre"
 }

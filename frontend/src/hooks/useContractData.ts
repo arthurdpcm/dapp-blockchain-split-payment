@@ -49,16 +49,13 @@ export const useContractData = () => {
     try {
       setIsLoading(true);
       
-
       const balancePromises = STABLECOINS.map(async (coin) => {
         const tokenContract = new ethers.Contract(coin.address, TOKEN_ABI.abi, provider);
         const balance = await tokenContract.balanceOf(TaxWallet);
-        
         if (balance === 0n) return undefined;
 
         return { [coin.symbol]: ethers.formatUnits(balance, coin.decimals) };
       });
-
       const balancesArray = await Promise.all(balancePromises);
       const filtered = balancesArray.filter((b): b is Record<string, string> => b !== undefined);
       const balancesMap = filtered.reduce((acc, curr) => ({ ...acc, ...curr }), {});

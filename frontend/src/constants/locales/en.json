@@ -66,5 +66,16 @@
   "feature_tax": "Tax Collection: Automatic calculation and transfer of a percentage of the value to a tax wallet.",
   "feature_monitoring": "On-Chain Monitoring: Dedicated pages to view the contract balance and emitted payment events.",
   "feature_security": "Security: Protected administrative functions, allowing only the contract owner to make critical changes.",
-  "author_info": "Developed by Arthur Duarte as a Final Course Project (TCC) for CEFET/RJ."
+  "author_info": "Developed by Arthur Duarte as a Final Course Project (TCC) for CEFET/RJ.",
+  "swap_more_info": "For more information about the swap, ",
+  "click_here": "click here.",
+  "estimated_gas": "Estimated Gas",
+  "estimate_gas": "Estimate Gas Fees",
+  "estimating": "Estimating...",
+  "contract_fee": "Contract Fee",
+  "uniswap_pool_fee": "Uniswap Pool Fee",
+  "gas_fee_estimate": "Gas Fee (Estimated)",
+  "gas_fee": "Gas Fee",
+  "contract_monitor_header": "Contract Monitor",
+  "about": "About"
 }

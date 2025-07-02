@@ -49,14 +49,14 @@ const Header = () => {
             isActive={location.pathname === '/contract-monitor'}
             isMobile={isMobile}
           >
-            Contract Monitor
+            {t('contract_monitor_header')}
           </StyledLink>
           <StyledLink
             to="/about"
             isActive={location.pathname === '/about'}
             isMobile={isMobile}
           >
-            About
+            {t('about')}
           </StyledLink>
         </Nav>
       </LogoContainer>
