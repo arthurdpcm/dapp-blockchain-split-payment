@@ -12,6 +12,9 @@ import {
   SwapButton,
   RateInfo,
   InfoBar,
+  FeeDetails,
+  FeeItem,
+  EstimateGasButton
 } from './Swap.styled';
 import { useTranslation } from 'react-i18next';
 import { BRL_STABLECOINS, USD_STABLECOINS } from '@/constants/stablecoins';
@@ -22,6 +25,7 @@ import { useSwap } from '@/hooks/useSwap';
 import Modal from '@/components/Modal/Modal';
 import Loading from '@/components/Loading/Loading';
 import Container from '@/components/Container/Container';
+import { Link } from 'react-router-dom';
 
 const Swap: React.FC = () => {
   const [tokenIn, setTokenIn] = useState(BRL_STABLECOINS[0]);
@@ -31,13 +35,15 @@ const Swap: React.FC = () => {
   const [isQuoteLoading, setIsQuoteLoading] = useState(false);
   const [isSwapLoading, setIsSwapLoading] = useState(false);
   const [quoteData, setQuoteData] = useState<{ rate: number; fee: number } | null>(null);
+  const [isEstimating, setIsEstimating] = useState(false);
+  const [estimatedGas, setEstimatedGas] = useState<string | null>(null);
 
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   const {t} = useTranslation();
   const { account, connect } = useWallet();
-  const { executeSwap, isSwapping  } = useSwap();
+  const { executeSwap, isSwapping, estimateGasForSwap  } = useSwap();
 
   // Atualize a forma como você chama o hook
   const { balance: tokenInBalanceString, refreshBalance: refreshTokenInBalance } = useTokenBalance(tokenIn.address);
@@ -65,6 +71,20 @@ const Swap: React.FC = () => {
     }
   }, [tokenIn, tokenOut]);
 
+  const handleEstimateGas = useCallback(async () => {
+    if (!quoteData || !amount0) return;
+    setIsEstimating(true);
+    const gas = await estimateGasForSwap({
+      tokenInAddress: tokenIn.address,
+      tokenOutAddress: tokenOut.address,
+      amountIn: amount0,
+      fee: quoteData.fee,
+      tokenInDecimals: tokenIn.decimals,
+    });
+    setEstimatedGas(gas);
+    setIsEstimating(false);
+  }, [estimateGasForSwap, tokenIn, tokenOut, amount0, quoteData]);
+
 
   const handleSwapClick = () => {
     if (isSwapDisabled) return;
@@ -74,7 +94,7 @@ const Swap: React.FC = () => {
 
   const handleConfirmSwap = async () => {
     setIsConfirmModalOpen(false);
-
+    
     if (!account || !tokenIn.address || !tokenOut.address || amount0AsNumber <= 0 || !quoteData) {
       return;
     }
@@ -127,13 +147,28 @@ const Swap: React.FC = () => {
   }, [fetchQuote, hasUserInteracted]);
 
   useEffect(() => {
+    // Limpa a estimativa de gás se o valor ou os tokens mudarem
+    setEstimatedGas(null);
+  }, [amount0, tokenIn, tokenOut]);
+  
+useEffect(() => {
     if (amount0AsNumber > 0 && quoteData?.rate) {
-      const calculatedAmount = amount0AsNumber * quoteData.rate;
-      setAmount1(calculatedAmount.toFixed(6));
+      // A taxa do contrato (1.1%) é aplicada sobre o valor de entrada
+      const contractTax = amount0AsNumber * 0.011; 
+      const netAmountAfterContractTax = amount0AsNumber - contractTax;
+      const poolFeeTax = netAmountAfterContractTax * (quoteData.fee / (10000 * 100));
+      const calculatedAmount = (netAmountAfterContractTax - poolFeeTax) * quoteData.rate;
+      if (estimatedGas && estimatedGas !== '0') {
+        const gasCost = parseFloat(estimatedGas);
+        const finalAmount = calculatedAmount - gasCost;
+        setAmount1(finalAmount > 0 ? finalAmount.toFixed(6) : '0.000000');
+      } else {
+        setAmount1(calculatedAmount.toFixed(6));
+      }
     } else {
       setAmount1('');
     }
-  }, [amount0AsNumber, quoteData]);
+  }, [amount0AsNumber, quoteData, estimatedGas]);
 
 
   const handleAmount0Change = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -245,6 +280,27 @@ const Swap: React.FC = () => {
             </SwapButton>
           )}
 
+          <FeeDetails>
+            <FeeItem>
+              <span>{t("contract_fee")}</span>
+              <span>1.1%</span>
+            </FeeItem>
+            <FeeItem>
+              <span>{t("uniswap_pool_fee")}</span>
+              <span>{quoteData?.fee ? `${quoteData.fee / 10000}%` : 'N/A'}</span>
+            </FeeItem>
+            <FeeItem>
+              <span>{t("gas_fee_estimate")}</span>
+              <span>{estimatedGas ? `~${parseFloat(estimatedGas).toFixed(6)} POL` : 'N/A'}</span>
+            </FeeItem>
+          </FeeDetails>
+
+          {account && (
+            <EstimateGasButton onClick={handleEstimateGas} disabled={isEstimating || amount0AsNumber <= 0} >
+              {isEstimating ? t('estimating') : t('estimate_gas')}
+            </EstimateGasButton>
+          )}
+
           <RateInfo>
             {
               isQuoteLoading ? (
@@ -253,9 +309,6 @@ const Swap: React.FC = () => {
                 <>
                   <span style={{ color: '#aaa', fontSize: '0.95rem' }}>
                     {`1 ${tokenIn.symbol} = ${quoteData?.rate.toFixed(6)} ${tokenOut.symbol}`}
-                  </span>
-                  <span style={{ color: '#aaa', fontSize: '0.95rem' }}>
-                    {t('pool_fee')}: {quoteData?.fee ? `${quoteData.fee / 10000}%` : 'N/A'}
                   </span>
                 </>
               )
@@ -282,6 +335,18 @@ const Swap: React.FC = () => {
           amountOut: amount1,
           tokenOut: tokenOut.symbol
         })}
+        <div style={{ marginTop: '1rem' }}>
+          <p>{t('swap_more_info')}
+            <Link
+              to="/about"
+              style={{ color: '#1a9c9c', textDecoration: 'underline', margin: '0 4px' }}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t('click_here')}
+            </Link>
+          </p>
+        </div>
       </Modal>
     </Container>
   ));

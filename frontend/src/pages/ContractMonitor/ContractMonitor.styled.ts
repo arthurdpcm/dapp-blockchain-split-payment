@@ -73,9 +73,9 @@ export const EventList = styled.div`
 `;
 
 export const EventCard = styled.div`
-  background-color: ${COLORS.lightGray};
+  background-color: ${COLORS.darkGray};
   border: 1px solid ${COLORS.borderGray};
-  border-left: 5px solid ${COLORS.oceanBlue};
+  border-left: 5px solid ${COLORS.lightOceanBlue};
   border-radius: 4px;
   padding: 1rem;
   font-family: 'Courier New', Courier, monospace;
@@ -84,8 +84,9 @@ export const EventCard = styled.div`
 
 export const EventHeader = styled.div`
   font-weight: bold;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
-  color: ${COLORS.oceanBlue};
+  color: ${COLORS.lightOceanBlue};
 `;
 
 export const EventDetails = styled.div`
@@ -96,11 +97,11 @@ export const EventDetails = styled.div`
 
 export const EventArg = styled.div`
   word-break: break-all;
-  color: ${COLORS.darkGray};
+  color: ${COLORS.white};
   span {
     font-weight: bold;
     margin-right: 0.5rem;
-    color: ${COLORS.darkOceanBlue};
+    color: ${COLORS.oceanBlue};
   }
 `;
 
