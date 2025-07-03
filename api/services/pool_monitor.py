@@ -37,13 +37,15 @@ class PoolMonitorService:
         return False, 0.0 
 
 
-    def get_pool(self, pool_id: str):
-        start_timestamp = first_day_of_month_timestamp()
-        print(f"[PoolMonitorService] Fetching pool data for {pool_id} since {start_timestamp}")
+    def get_pool(self, pool_id: str, date_from: str | None = None, date_to: str | None = None) -> dict:
+        if not date_from and not date_to:
+            # If no date range is specified, use the first day of the current month
+            date_from = first_day_of_month_timestamp()
+        print(f"[PoolMonitorService] Fetching pool data for {pool_id} since {date_from}")
         if not pool_id:
             raise ValueError("Pool ID cannot be empty")
-        swaps = get_swaps_for_pool(pool_id, start_timestamp)
-        
+        swaps = get_swaps_for_pool(pool_id, date_from, date_to)
+
         return {
             "pool_id": pool_id,
             "swaps": swaps,

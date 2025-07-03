@@ -46,16 +46,19 @@ def get_pool_by_pair(tokens0_in=None, tokens1_in=None):
                 print(f"Error querying The Graph for pair {token0}/{token1}: {response.text}")
     return pool_ids
 
-def get_swaps_for_pool(pool_id, start_timestamp):
+def get_swaps_for_pool(pool_id, date_from, date_to=None):
     all_swaps = []
     last_id = ""
+    if not date_to: # get now in timestamp format
+        date_to = str(int(datetime.datetime.now(datetime.timezone.utc).timestamp()))
+      
     while True:
         query = f"""
-        query($startTimestamp: String!, $lastId: String!) {{
+        query($date_from: String!, $date_to: String!, $lastId: String!) {{
           pool(id: "{pool_id}") {{
             swaps(
               first: 1000,
-              where: {{timestamp_gte: $startTimestamp, id_gt: $lastId}}
+              where: {{timestamp_gte: $date_from, timestamp_lte: $date_to, id_gt: $lastId}}
               orderBy: id
               orderDirection: asc
             ) {{
@@ -69,10 +72,10 @@ def get_swaps_for_pool(pool_id, start_timestamp):
           }}
         }}
         """
-        variables = {"startTimestamp": start_timestamp, "lastId": last_id}
+        variables = {"date_from": date_from, "date_to": date_to, "lastId": last_id}
         resp = requests.post(url, json={"query": query, "variables": variables}, headers=headers)
         if resp.ok:
-            data = resp.json()  
+            data = resp.json()
             swaps = []
             if (
                 "data" in data and data["data"] and
