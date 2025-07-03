@@ -77,7 +77,7 @@ export const TokenImage = styled.img`
 `;
 
 export const TokenBalance = styled.div`
-  color: #FF4D4F;
+  color: ${COLORS.lightGray};
   font-size: 0.9rem;
   margin-top: 0.2rem;
 `;

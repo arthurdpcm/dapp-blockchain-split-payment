@@ -34,9 +34,6 @@ const Header = () => {
         <img src="/split-payment-removebg-preview.png" width={96} />
         <Title isMobile={isMobile}>{isMobile ? 'SP' : 'Split Payment'}</Title>
         <Nav isMobile={isMobile}>
-          <StyledLink to="/" isActive={location.pathname === '/'} isMobile={isMobile}>
-            {t('tax_monitor')}
-          </StyledLink>
           <StyledLink
             to="/swap"
             isActive={location.pathname === '/swap'}
@@ -44,6 +41,17 @@ const Header = () => {
           >
             Swap
           </StyledLink>
+          <StyledLink
+            to="/pool-monitor"
+            isActive={location.pathname === '/pool-monitor'}
+            isMobile={isMobile}
+          >
+            {t('pool_monitor')}
+          </StyledLink>
+          {/* <StyledLink to="/" isActive={location.pathname === '/'} isMobile={isMobile}>
+            {t('tax_monitor')}
+          </StyledLink> */}
+
           <StyledLink
             to="/contract-monitor"
             isActive={location.pathname === '/contract-monitor'}
@@ -58,6 +66,7 @@ const Header = () => {
           >
             {t('about')}
           </StyledLink>
+
         </Nav>
       </LogoContainer>
 

@@ -88,5 +88,5 @@ export const useContractData = () => {
     fetchData();
   }, [fetchData]);
 
-  return { balances, events, isLoading, refetch: fetchData };
+  return { balances, events, isLoading, refetch: fetchData, taxWalletAddress: TaxWallet };
 };

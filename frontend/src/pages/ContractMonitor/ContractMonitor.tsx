@@ -22,7 +22,7 @@ import Container from '@/components/Container/Container';
 
 const ContractMonitor = () => {
   const { account } = useContext(AccountContext);
-  const { balances, events, isLoading } = useContractData();
+  const { balances, events, isLoading, taxWalletAddress } = useContractData();
   const { t } = useTranslation();
 
   // --- Pagination State ---
@@ -65,6 +65,7 @@ const ContractMonitor = () => {
     <Container title={t('contract_monitor')} maxWidth='800px'>
 
       <ContractMonitorSection>
+        {/* <p>{t('tax_wallet_address')}: {taxWalletAddress}</p> */}
         <ContractMonitorSectionTitle>{t('contract_balance')}</ContractMonitorSectionTitle>
         <BalanceList>
           {Object.entries(balances).map(([symbol, balance]) => (

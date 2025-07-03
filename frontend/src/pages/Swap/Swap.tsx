@@ -159,13 +159,7 @@ useEffect(() => {
       const netAmountAfterContractTax = amount0AsNumber - contractTax;
       const poolFeeTax = netAmountAfterContractTax * (quoteData.fee / (10000 * 100));
       const calculatedAmount = (netAmountAfterContractTax - poolFeeTax) * quoteData.rate;
-      if (estimatedGas && estimatedGas !== '0') {
-        const gasCost = parseFloat(estimatedGas);
-        const finalAmount = calculatedAmount - gasCost;
-        setAmount1(finalAmount > 0 ? finalAmount.toFixed(6) : '0.000000');
-      } else {
         setAmount1(calculatedAmount.toFixed(6));
-      }
     } else {
       setAmount1('');
     }

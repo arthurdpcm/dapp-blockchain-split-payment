@@ -110,7 +110,7 @@ export function useSwap() {
         const approveTx = await tokenContract.approve(contractAddresses.SplitPayment, amountToSwap);
         await approveTx.wait();
       }
-
+      console.log("Aprovação concluída, iniciando o swap...");
       const swapTx = await splitPaymentContract.splitAndSwapPayment(
         tokenInAddress,
         amountToSwap,

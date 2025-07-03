@@ -12,13 +12,23 @@ export async function getBrlUsdSwaps() {
   return response.data as BrlUsdSwapsByPool[];
 }
 
-export async function getPool(id: string) {
-  const response = await api.get(`/pool/${id}`);
+export async function getPool(id: string, fromTimestamp?: string, toTimestamp?: string) {
+  const response = await api.get(`/pool/${id}`, {
+    params: {
+      dateFrom: fromTimestamp,
+      dateTo: toTimestamp,
+    },
+  });
   return response.data as PoolData;
 }
 
 export async function getQuote(tokenIn: string, tokenOut: string) {
-  const response = await api.get(`/quote?tokenIn=${tokenIn}&tokenOut=${tokenOut}`);
+  const response = await api.get(`/quote`, {
+    params: {
+      tokenIn: tokenIn,
+      tokenOut: tokenOut,
+    },
+  });
 
   if (response.status !== 200) throw new Error('Failed to fetch quote');
   const rawData = response.data as {
