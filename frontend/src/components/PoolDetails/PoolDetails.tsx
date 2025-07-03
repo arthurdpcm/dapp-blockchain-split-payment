@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/Button/Button.styled';
 import { FirstLastSpan, PoolHeader, ExternalLink } from './PoolDetails.styled';
 // import { Link } from 'react-router-dom';
 
-
 interface PoolDetailsProps {
   pool: PoolData;
 }
@@ -43,16 +42,19 @@ const PoolDetails = ({ pool }: PoolDetailsProps) => {
 
   return (
     <>
-    {/* <Container title={`${token0} / ${token1}`} maxWidth="800px"> */}
+      {/* <Container title={`${token0} / ${token1}`} maxWidth="800px"> */}
       <PoolHeader>
-        <span>{token0} / {token1}</span>
-        <ExternalLink target='_blank' to={`https://www.geckoterminal.com/polygon_pos/pools/${pool.pool_id}`}>
+        <span>
+          {token0} / {token1}
+        </span>
+        <ExternalLink
+          target="_blank"
+          to={`https://www.geckoterminal.com/polygon_pos/pools/${pool.pool_id}`}
+        >
           <img height={32} src="/gecko_terminal.svg" alt="Gecko Terminal Logo" />
         </ExternalLink>
       </PoolHeader>
-      <TaxMonitorDescription>
-        {t('total_swaps_period')}:
-      </TaxMonitorDescription>
+      <TaxMonitorDescription>{t('total_swaps_period')}:</TaxMonitorDescription>
       <TaxMonitorTotal>{pool.swaps.length} swaps</TaxMonitorTotal>
       <TaxMonitorDescription style={{ marginTop: 16 }}>
         Pool ID: {pool.pool_id}
@@ -61,41 +63,91 @@ const PoolDetails = ({ pool }: PoolDetailsProps) => {
       <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 8 }}>
         <thead>
           <tr style={{ background: 'rgba(26,156,156,0.08)' }}>
-            <th style={{ textAlign: 'left', padding: '6px 8px', fontWeight: 600, fontSize: '1rem' }}>{t('pair')}</th>
-            <th style={{ textAlign: 'right', padding: '6px 8px', fontWeight: 600, fontSize: '1rem' }}>{t('amount0')}</th>
-            <th style={{ textAlign: 'right', padding: '6px 8px', fontWeight: 600, fontSize: '1rem' }}>{t('amount1')}</th>
-            <th style={{ textAlign: 'right', padding: '6px 8px', fontWeight: 600, fontSize: '1rem' }}>{t('timestamp')}</th>
+            <th
+              style={{ textAlign: 'left', padding: '6px 8px', fontWeight: 600, fontSize: '1rem' }}
+            >
+              {t('pair')}
+            </th>
+            <th
+              style={{ textAlign: 'right', padding: '6px 8px', fontWeight: 600, fontSize: '1rem' }}
+            >
+              {t('amount0')}
+            </th>
+            <th
+              style={{ textAlign: 'right', padding: '6px 8px', fontWeight: 600, fontSize: '1rem' }}
+            >
+              {t('amount1')}
+            </th>
+            <th
+              style={{ textAlign: 'right', padding: '6px 8px', fontWeight: 600, fontSize: '1rem' }}
+            >
+              {t('timestamp')}
+            </th>
           </tr>
         </thead>
         <tbody>
           {swapsPage.map((swap, idx) => (
             <tr key={idx + startIdx} style={{ borderBottom: '1px solid #e0e0e0' }}>
-              <td style={{ padding: '6px 8px' }}>{swap.token0.symbol} / {swap.token1.symbol}</td>
+              <td style={{ padding: '6px 8px' }}>
+                {swap.token0.symbol} / {swap.token1.symbol}
+              </td>
               <td style={{ padding: '6px 8px', textAlign: 'right' }}>{swap.amount0}</td>
               <td style={{ padding: '6px 8px', textAlign: 'right' }}>{swap.amount1}</td>
-              <td style={{ padding: '6px 8px', textAlign: 'right' }}>{formatDate(swap.timestamp)}</td>
+              <td style={{ padding: '6px 8px', textAlign: 'right' }}>
+                {formatDate(swap.timestamp)}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
       {totalPages > 1 && (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, marginTop: 16 }}>
-          <Button hasBorder={false} isMobile={isMobile} onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
-            <FirstLastSpan>{"<<"}</FirstLastSpan>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 12,
+            marginTop: 16,
+          }}
+        >
+          <Button
+            hasBorder={false}
+            isMobile={isMobile}
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
+            <FirstLastSpan>{'<<'}</FirstLastSpan>
           </Button>
-          <Button hasBorder={false} isMobile={isMobile} onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1}>
+          <Button
+            hasBorder={false}
+            isMobile={isMobile}
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
             {t('previous')}
           </Button>
-          <span>{currentPage} / {totalPages}</span>
-          <Button hasBorder={false} isMobile={isMobile} onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>
+          <span>
+            {currentPage} / {totalPages}
+          </span>
+          <Button
+            hasBorder={false}
+            isMobile={isMobile}
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
             {t('next')}
           </Button>
-          <Button hasBorder={false} isMobile={isMobile} onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages}>
-            <FirstLastSpan>{">>"}</FirstLastSpan>
+          <Button
+            hasBorder={false}
+            isMobile={isMobile}
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            <FirstLastSpan>{'>>'}</FirstLastSpan>
           </Button>
         </div>
       )}
-    {/* </Container> */}
+      {/* </Container> */}
     </>
   );
 };

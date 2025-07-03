@@ -14,7 +14,7 @@ import {
   InfoBar,
   FeeDetails,
   FeeItem,
-  EstimateGasButton
+  EstimateGasButton,
 } from './Swap.styled';
 import { useTranslation } from 'react-i18next';
 import { BRL_STABLECOINS, USD_STABLECOINS } from '@/constants/stablecoins';
@@ -41,18 +41,20 @@ const Swap: React.FC = () => {
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const { account, connect } = useWallet();
-  const { executeSwap, isSwapping, estimateGasForSwap  } = useSwap();
+  const { executeSwap, isSwapping, estimateGasForSwap } = useSwap();
 
   // Atualize a forma como você chama o hook
-  const { balance: tokenInBalanceString, refreshBalance: refreshTokenInBalance } = useTokenBalance(tokenIn.address);
-  const { balance: tokenOutBalanceString, refreshBalance: refreshTokenOutBalance } = useTokenBalance(tokenOut.address);
+  const { balance: tokenInBalanceString, refreshBalance: refreshTokenInBalance } = useTokenBalance(
+    tokenIn.address
+  );
+  const { balance: tokenOutBalanceString, refreshBalance: refreshTokenOutBalance } =
+    useTokenBalance(tokenOut.address);
 
   const amount0AsNumber = parseFloat(amount0) || 0;
   const tokenInBalance = parseFloat(tokenInBalanceString) || 0;
   const tokenOutBalance = parseFloat(tokenOutBalanceString) || 0;
-
 
   const fetchQuote = useCallback(async () => {
     if (!tokenIn?.address || !tokenOut?.address) return;
@@ -67,7 +69,7 @@ const Swap: React.FC = () => {
       setIsQuoteLoading(false);
     } catch (e) {
       console.error('Error fetching quote:', e);
-      setQuoteData(null); 
+      setQuoteData(null);
     }
   }, [tokenIn, tokenOut]);
 
@@ -85,16 +87,14 @@ const Swap: React.FC = () => {
     setIsEstimating(false);
   }, [estimateGasForSwap, tokenIn, tokenOut, amount0, quoteData]);
 
-
   const handleSwapClick = () => {
     if (isSwapDisabled) return;
     setIsConfirmModalOpen(true);
   };
 
-
   const handleConfirmSwap = async () => {
     setIsConfirmModalOpen(false);
-    
+
     if (!account || !tokenIn.address || !tokenOut.address || amount0AsNumber <= 0) {
       alert(t('swap_error_invalid_input'));
       return;
@@ -106,7 +106,7 @@ const Swap: React.FC = () => {
         tokenOutAddress: tokenOut.address,
         amountIn: amount0,
         fee: 500,
-        tokenInDecimals: tokenIn.decimals
+        tokenInDecimals: tokenIn.decimals,
       });
 
       // Lógica de sucesso movida para dentro do try
@@ -123,7 +123,6 @@ const Swap: React.FC = () => {
         // Se o hook retornar um erro estruturado
         alert(`Erro no swap: ${swapResult.error}`);
       }
-
     } catch (error) {
       console.error('Error executing swap:', error);
       // O erro já é tratado dentro do hook useSwap, mas podemos ter um fallback
@@ -151,38 +150,38 @@ const Swap: React.FC = () => {
     // Limpa a estimativa de gás se o valor ou os tokens mudarem
     setEstimatedGas(null);
   }, [amount0, tokenIn, tokenOut]);
-  
-useEffect(() => {
+
+  useEffect(() => {
     if (amount0AsNumber > 0 && quoteData?.rate) {
       // A taxa do contrato (1.1%) é aplicada sobre o valor de entrada
-      const contractTax = amount0AsNumber * 0.011; 
+      const contractTax = amount0AsNumber * 0.011;
       const netAmountAfterContractTax = amount0AsNumber - contractTax;
       const poolFeeTax = netAmountAfterContractTax * (quoteData.fee / (10000 * 100));
       const calculatedAmount = (netAmountAfterContractTax - poolFeeTax) * quoteData.rate;
-        setAmount1(calculatedAmount.toFixed(6));
+      setAmount1(calculatedAmount.toFixed(6));
     } else {
       setAmount1('');
     }
   }, [amount0AsNumber, quoteData, estimatedGas]);
 
-
   const handleAmount0Change = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // Permite campo vazio ou números positivos
     if (value === '' || parseFloat(value) >= 0) {
-        setAmount0(value);
-        // Marca que o usuário interagiu pela primeira vez
-        if (!hasUserInteracted) {
-            setHasUserInteracted(true);
-        }
+      setAmount0(value);
+      // Marca que o usuário interagiu pela primeira vez
+      if (!hasUserInteracted) {
+        setHasUserInteracted(true);
+      }
     }
   };
 
-  const isSwapDisabled = !account || tokenInBalance < amount0AsNumber || !amount0AsNumber || isSwapping;
-  const showInsufficientBalance = account && tokenInBalance < amount0AsNumber && amount0AsNumber > 0;
+  const isSwapDisabled =
+    !account || tokenInBalance < amount0AsNumber || !amount0AsNumber || isSwapping;
+  const showInsufficientBalance =
+    account && tokenInBalance < amount0AsNumber && amount0AsNumber > 0;
 
-  return (
-    isSwapLoading ? (
+  return isSwapLoading ? (
     <div
       style={{
         display: 'flex',
@@ -196,128 +195,138 @@ useEffect(() => {
     >
       <Loading />
     </div>
-
-    ) : (
-    <Container title={t('split_payment_swap')} maxWidth='600px'>
+  ) : (
+    <Container title={t('split_payment_swap')} maxWidth="600px">
       <div>
-          <SwapBox>
-              <BoxLeft>
-              <BoxLabel>{t('Amount In')}</BoxLabel>
-              <BoxInput
-                type="number"
-                placeholder="0.00"
-                value={amount0}
-                min="0"
-                onChange={handleAmount0Change}
-              />
-              </BoxLeft>
-            <BoxRight>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <TokenImage src={tokenIn.image} alt={tokenIn.symbol} title={tokenIn.name}/>
-                <TokenSelector
-                  value={tokenIn.address}
-                  onChange={e => {
-                      const selected = BRL_STABLECOINS.find(t => t.address === e.target.value);
-                      if (selected) setTokenIn(selected);
-                  }}
-                >
-                  {BRL_STABLECOINS.map(token => (
-                    <option key={token.symbol} value={token.address}>{token.symbol}</option>
-                  ))}
-                </TokenSelector>
-              </div>
-              <TokenBalance>{account ? `${Math.floor(Number(tokenInBalance) * 10000) / 10000} ${tokenIn.symbol}` : '-'}</TokenBalance>
-            </BoxRight>
-          </SwapBox>
+        <SwapBox>
+          <BoxLeft>
+            <BoxLabel>{t('Amount In')}</BoxLabel>
+            <BoxInput
+              type="number"
+              placeholder="0.00"
+              value={amount0}
+              min="0"
+              onChange={handleAmount0Change}
+            />
+          </BoxLeft>
+          <BoxRight>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <TokenImage src={tokenIn.image} alt={tokenIn.symbol} title={tokenIn.name} />
+              <TokenSelector
+                value={tokenIn.address}
+                onChange={(e) => {
+                  const selected = BRL_STABLECOINS.find((t) => t.address === e.target.value);
+                  if (selected) setTokenIn(selected);
+                }}
+              >
+                {BRL_STABLECOINS.map((token) => (
+                  <option key={token.symbol} value={token.address}>
+                    {token.symbol}
+                  </option>
+                ))}
+              </TokenSelector>
+            </div>
+            <TokenBalance>
+              {account
+                ? `${Math.floor(Number(tokenInBalance) * 10000) / 10000} ${tokenIn.symbol}`
+                : '-'}
+            </TokenBalance>
+          </BoxRight>
+        </SwapBox>
 
-          <ArrowContainer>
-            <span style={{ fontSize: 36}}>↓</span>
-          </ArrowContainer>
+        <ArrowContainer>
+          <span style={{ fontSize: 36 }}>↓</span>
+        </ArrowContainer>
 
-          <SwapBox>
-            <BoxLeft>
-              <BoxLabel>{t('Amount Out')}</BoxLabel>
-              <BoxInput
-                type="number"
-                placeholder="0.00"
-                value={amount1}
-                readOnly
-                style={{ color: '#fff' }}
-                disabled
-              />
-            </BoxLeft>
-            <BoxRight>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <TokenImage src={tokenOut.image} alt={tokenOut.symbol} title={tokenOut.name} />
-                <TokenSelector
-                  value={tokenOut.address}
-                  onChange={e => {
-                      const selected = USD_STABLECOINS.find(t => t.address === e.target.value);
-                      if (selected) setTokenOut(selected);
-                  }}
-                >
-                  {USD_STABLECOINS.map(token => (
-                    <option key={token.symbol} value={token.address}>{token.symbol}</option>
-                  ))}
-                </TokenSelector>
-              </div>
-              <TokenBalance>{account ? `${Math.floor(Number(tokenOutBalance) * 10000) / 10000} ${tokenOut.symbol}` : '-'}</TokenBalance>
-            </BoxRight>
-          </SwapBox>
+        <SwapBox>
+          <BoxLeft>
+            <BoxLabel>{t('Amount Out')}</BoxLabel>
+            <BoxInput
+              type="number"
+              placeholder="0.00"
+              value={amount1}
+              readOnly
+              style={{ color: '#fff' }}
+              disabled
+            />
+          </BoxLeft>
+          <BoxRight>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <TokenImage src={tokenOut.image} alt={tokenOut.symbol} title={tokenOut.name} />
+              <TokenSelector
+                value={tokenOut.address}
+                onChange={(e) => {
+                  const selected = USD_STABLECOINS.find((t) => t.address === e.target.value);
+                  if (selected) setTokenOut(selected);
+                }}
+              >
+                {USD_STABLECOINS.map((token) => (
+                  <option key={token.symbol} value={token.address}>
+                    {token.symbol}
+                  </option>
+                ))}
+              </TokenSelector>
+            </div>
+            <TokenBalance>
+              {account
+                ? `${Math.floor(Number(tokenOutBalance) * 10000) / 10000} ${tokenOut.symbol}`
+                : '-'}
+            </TokenBalance>
+          </BoxRight>
+        </SwapBox>
 
-          {account ? (
-            <SwapButton disabled={isSwapDisabled} onClick={handleSwapClick}>
-              {isSwapping ? t('processing') : t('swap')}
-            </SwapButton>
+        {account ? (
+          <SwapButton disabled={isSwapDisabled} onClick={handleSwapClick}>
+            {isSwapping ? t('processing') : t('swap')}
+          </SwapButton>
+        ) : (
+          <SwapButton onClick={connect}>{t('connect_wallet')}</SwapButton>
+        )}
+
+        <FeeDetails>
+          <FeeItem>
+            <span>{t('contract_fee')}</span>
+            <span>1.1%</span>
+          </FeeItem>
+          <FeeItem>
+            <span>{t('uniswap_pool_fee')}</span>
+            <span>{quoteData?.fee ? `${quoteData.fee / 10000}%` : 'N/A'}</span>
+          </FeeItem>
+          <FeeItem>
+            <span>{t('gas_fee_estimate')}</span>
+            <span>{estimatedGas ? `~${parseFloat(estimatedGas).toFixed(6)} POL` : 'N/A'}</span>
+          </FeeItem>
+        </FeeDetails>
+
+        {account && (
+          <EstimateGasButton
+            onClick={handleEstimateGas}
+            disabled={isEstimating || amount0AsNumber <= 0}
+          >
+            {isEstimating ? t('estimating') : t('estimate_gas')}
+          </EstimateGasButton>
+        )}
+
+        <RateInfo>
+          {isQuoteLoading ? (
+            <span style={{ color: '#aaa', fontSize: '0.95rem' }}>Loading...</span>
           ) : (
-            <SwapButton onClick={connect}>
-              {t('connect_wallet')}
-            </SwapButton>
+            <>
+              <span style={{ color: '#aaa', fontSize: '0.95rem' }}>
+                {`1 ${tokenIn.symbol} = ${quoteData?.rate.toFixed(6)} ${tokenOut.symbol}`}
+              </span>
+            </>
           )}
+        </RateInfo>
 
-          <FeeDetails>
-            <FeeItem>
-              <span>{t("contract_fee")}</span>
-              <span>1.1%</span>
-            </FeeItem>
-            <FeeItem>
-              <span>{t("uniswap_pool_fee")}</span>
-              <span>{quoteData?.fee ? `${quoteData.fee / 10000}%` : 'N/A'}</span>
-            </FeeItem>
-            <FeeItem>
-              <span>{t("gas_fee_estimate")}</span>
-              <span>{estimatedGas ? `~${parseFloat(estimatedGas).toFixed(6)} POL` : 'N/A'}</span>
-            </FeeItem>
-          </FeeDetails>
-
-          {account && (
-            <EstimateGasButton onClick={handleEstimateGas} disabled={isEstimating || amount0AsNumber <= 0} >
-              {isEstimating ? t('estimating') : t('estimate_gas')}
-            </EstimateGasButton>
-          )}
-
-          <RateInfo>
-            {
-              isQuoteLoading ? (
-                <span style={{ color: '#aaa', fontSize: '0.95rem' }}>Loading...</span>
-              ) : (
-                <>
-                  <span style={{ color: '#aaa', fontSize: '0.95rem' }}>
-                    {`1 ${tokenIn.symbol} = ${quoteData?.rate.toFixed(6)} ${tokenOut.symbol}`}
-                  </span>
-                </>
-              )
-            }
-          </RateInfo>
-
-          { showInsufficientBalance && (
-            <InfoBar>
-              <span style={{ fontWeight: 700 }}>⚠</span> {t('insufficient_symbol_for_swap', { symbol: tokenIn.symbol })}
-            </InfoBar>
-          )}  
+        {showInsufficientBalance && (
+          <InfoBar>
+            <span style={{ fontWeight: 700 }}>⚠</span>{' '}
+            {t('insufficient_symbol_for_swap', { symbol: tokenIn.symbol })}
+          </InfoBar>
+        )}
       </div>
 
-          
       <Modal
         open={isConfirmModalOpen}
         onConfirm={handleConfirmSwap}
@@ -328,10 +337,11 @@ useEffect(() => {
           amountIn: amount0,
           tokenIn: tokenIn.symbol,
           amountOut: amount1,
-          tokenOut: tokenOut.symbol
+          tokenOut: tokenOut.symbol,
         })}
         <div style={{ marginTop: '1rem' }}>
-          <p>{t('swap_more_info')}
+          <p>
+            {t('swap_more_info')}
             <Link
               to="/about"
               style={{ color: '#1a9c9c', textDecoration: 'underline', margin: '0 4px' }}
@@ -344,7 +354,7 @@ useEffect(() => {
         </div>
       </Modal>
     </Container>
-  ));
+  );
 };
 
 export default Swap;

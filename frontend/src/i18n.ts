@@ -6,16 +6,16 @@ import pt from './constants/locales/pt.json';
 i18n.use(initReactI18next).init({
   resources: {
     en: {
-      translation: en, 
+      translation: en,
     },
     pt: {
-      translation: pt, 
+      translation: pt,
     },
   },
   lng: 'pt',
   fallbackLng: 'en',
   interpolation: {
-    escapeValue: false, 
+    escapeValue: false,
   },
 });
 

@@ -96,11 +96,7 @@ const TaxMonitor = () => {
     });
   };
 
-  const totalTransacted = brlUsdSwapsByPool.reduce(
-    (acc, pool) => acc + pool.total_brl_to_usd,
-    0
-  );
-  
+  const totalTransacted = brlUsdSwapsByPool.reduce((acc, pool) => acc + pool.total_brl_to_usd, 0);
 
   return isLoading ? (
     <div
@@ -117,37 +113,35 @@ const TaxMonitor = () => {
       <Loading />
     </div>
   ) : (
-    <Container title={(
-      <TaxMonitorHeader>
-        {t('tax_monitor')}
-        <Button
-          onClick={handleGetBrlUsdSwapsByPool}
-          title={t('refresh')}
-          isMobile={isMobile}
-          isConnect={!!account}
-          hasBorder={false}
-          padding="small"
-        >
-          <RefreshIcon size={'2rem'} />
-        </Button>
-      </TaxMonitorHeader>
-    )} maxWidth="800px">
-      
+    <Container
+      title={
+        <TaxMonitorHeader>
+          {t('tax_monitor')}
+          <Button
+            onClick={handleGetBrlUsdSwapsByPool}
+            title={t('refresh')}
+            isMobile={isMobile}
+            isConnect={!!account}
+            hasBorder={false}
+            padding="small"
+          >
+            <RefreshIcon size={'2rem'} />
+          </Button>
+        </TaxMonitorHeader>
+      }
+      maxWidth="800px"
+    >
       <TaxMonitorDescription>
         {t('total_transacted')} ({new Date().getMonth() + 1}):
       </TaxMonitorDescription>
-      <TaxMonitorTotal>
-        {formatBRL(totalTransacted)}
-      </TaxMonitorTotal>
+      <TaxMonitorTotal>{formatBRL(totalTransacted)}</TaxMonitorTotal>
       <TaxMonitorDivider>
         <TaxMonitorRow
           style={{ cursor: 'pointer' }}
           onClick={() => window.location.replace('about')}
         >
           <span>{t('tax')}</span>
-          <span style={{ color: COLORS.oceanBlue }}>
-            {formatBRL(totalTransacted * 0.011)}
-          </span>
+          <span style={{ color: COLORS.oceanBlue }}>{formatBRL(totalTransacted * 0.011)}</span>
         </TaxMonitorRow>
         <div style={{ marginTop: 18 }}>
           <TaxMonitorDetailTitle>{t('details')}</TaxMonitorDetailTitle>

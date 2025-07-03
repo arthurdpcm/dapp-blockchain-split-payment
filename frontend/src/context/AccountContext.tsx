@@ -11,8 +11,8 @@ interface AccountContextType {
 export const AccountContext = createContext<AccountContextType>({
   account: '',
   setAccount: () => {},
-  provider: null, 
-  setProvider: () => {}, 
+  provider: null,
+  setProvider: () => {},
 });
 
 export const AccountProvider = ({ children }: { children: ReactNode }) => {

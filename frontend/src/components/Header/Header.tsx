@@ -34,11 +34,7 @@ const Header = () => {
         <img src="/split-payment-removebg-preview.png" width={96} />
         <Title isMobile={isMobile}>{isMobile ? 'SP' : 'Split Payment'}</Title>
         <Nav isMobile={isMobile}>
-          <StyledLink
-            to="/swap"
-            isActive={location.pathname === '/swap'}
-            isMobile={isMobile}
-          >
+          <StyledLink to="/swap" isActive={location.pathname === '/swap'} isMobile={isMobile}>
             Swap
           </StyledLink>
           <StyledLink
@@ -59,14 +55,9 @@ const Header = () => {
           >
             {t('contract_monitor_header')}
           </StyledLink>
-          <StyledLink
-            to="/about"
-            isActive={location.pathname === '/about'}
-            isMobile={isMobile}
-          >
+          <StyledLink to="/about" isActive={location.pathname === '/about'} isMobile={isMobile}>
             {t('about')}
           </StyledLink>
-
         </Nav>
       </LogoContainer>
 

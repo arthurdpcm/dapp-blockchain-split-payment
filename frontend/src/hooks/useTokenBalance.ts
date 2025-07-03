@@ -10,7 +10,9 @@ export function useTokenBalance(tokenAddress: string) {
   // Adicionamos um contador para forçar a atualização
   const [refreshCount, setRefreshCount] = useState(0);
   const getTokenDecimals = useCallback((tokenAddress: string): number => {
-    const token = STABLECOINS.find((coin) => coin.address.toLowerCase() === tokenAddress.toLowerCase());
+    const token = STABLECOINS.find(
+      (coin) => coin.address.toLowerCase() === tokenAddress.toLowerCase()
+    );
     return token ? token.decimals : 6; // Default para 6 decimais
   }, []);
   const fetchBalance = useCallback(async () => {
@@ -35,7 +37,7 @@ export function useTokenBalance(tokenAddress: string) {
 
   // Função que os componentes podem chamar para forçar uma atualização
   const refreshBalance = () => {
-    setRefreshCount(count => count + 1);
+    setRefreshCount((count) => count + 1);
   };
 
   // Retornamos o saldo e a função de atualização

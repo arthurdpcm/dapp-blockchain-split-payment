@@ -17,7 +17,7 @@ export const ExternalLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  
+
   img {
     transition: transform 0.2s ease-in-out;
   }

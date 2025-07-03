@@ -52,7 +52,7 @@ export function useWallet() {
         const newProvider = new ethers.BrowserProvider(window.ethereum);
         setProvider(newProvider);
       } catch (err) {
-        console.error("Erro ao conectar:", err);
+        console.error('Erro ao conectar:', err);
       }
     } else {
       alert('MetaMask não encontrada!');

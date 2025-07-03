@@ -9,7 +9,6 @@ export const SwapBox = styled.div`
   align-items: center;
   justify-content: space-between;
   position: relative;
-
 `;
 
 export const BoxLeft = styled.div`
@@ -59,14 +58,13 @@ export const BoxRight = styled.div`
 `;
 
 export const TokenSelector = styled.select`
-  background: #23272F;
+  background: #23272f;
   color: ${COLORS.lightGray};
   border: 1px solid ${COLORS.oceanBlue};
   border-radius: 8px;
   padding: 0.3rem 0.8rem;
   font-size: 1rem;
   font-weight: 500;
-
 `;
 
 export const TokenImage = styled.img`
@@ -103,7 +101,7 @@ export const SwapButton = styled.button`
   transition: background 0.2s;
   transition: transform 0.2s;
   &:disabled {
-    background: #23272F;
+    background: #23272f;
     color: #aaa;
     cursor: not-allowed;
   }
@@ -111,7 +109,6 @@ export const SwapButton = styled.button`
     background: ${COLORS.darkOceanBlue};
     transform: scale(1.02);
   }
-  
 `;
 
 export const RateInfo = styled.div`
@@ -184,7 +181,7 @@ export const EstimateGasButton = styled.button`
   transition: background 0.2s;
   transition: transform 0.2s;
   &:disabled {
-    background: #23272F;
+    background: #23272f;
     color: #aaa;
     cursor: not-allowed;
   }
@@ -192,4 +189,4 @@ export const EstimateGasButton = styled.button`
     background: ${COLORS.darkOceanBlue};
     transform: scale(1.02);
   }
-`
+`;

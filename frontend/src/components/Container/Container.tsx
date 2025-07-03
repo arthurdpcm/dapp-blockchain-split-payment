@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  ContainerWrapper,
-  ContainerTitle,
-  ContainerBody,
-} from './Container.styled';
+import { ContainerWrapper, ContainerTitle, ContainerBody } from './Container.styled';
 
 interface ContainerProps {
   title: string;
@@ -11,11 +7,7 @@ interface ContainerProps {
   maxWidth?: string;
 }
 
-const Container: React.FC<ContainerProps> = ({
-  title,
-  children,
-  maxWidth = '800px',
-}) => {
+const Container: React.FC<ContainerProps> = ({ title, children, maxWidth = '800px' }) => {
   return (
     <ContainerWrapper style={{ maxWidth }}>
       <ContainerTitle>{title}</ContainerTitle>

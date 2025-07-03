@@ -14,27 +14,26 @@ export default function Modal({
   onConfirm,
   onClose,
   title,
-  children, 
+  children,
 }: {
   open: boolean;
   onConfirm: () => void;
   onClose: () => void;
   title: string;
-  children: React.ReactNode; 
+  children: React.ReactNode;
 }) {
   const { t } = useTranslation();
 
   if (!open) return null;
 
   return (
-
     <ModalContainer onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <ModalTitle>{title}</ModalTitle>
         <ModalText>{children}</ModalText>
         <ModalButtonContainer>
           <Button
-            onClick={onClose} 
+            onClick={onClose}
             isMobile={false}
             isConnect={false}
             hasBorder={true}

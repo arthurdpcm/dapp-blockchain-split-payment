@@ -50,9 +50,7 @@ const About = () => {
 
       <AuthorInfo>
         <AboutText>{t('author_info')}</AboutText>
-        <AboutText>
-          E-mail: duartearthur42@gmail.com
-        </AboutText>
+        <AboutText>E-mail: duartearthur42@gmail.com</AboutText>
         <AboutText>
           <a
             href="COLOQUE_O_LINK_DO_SEU_TCC_AQUI"
@@ -65,7 +63,6 @@ const About = () => {
         </AboutText>
       </AuthorInfo>
     </Container>
-    
   );
 };
 

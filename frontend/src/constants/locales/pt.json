@@ -76,7 +76,7 @@
   "contract_monitor_header": "Monitor do Contrato",
   "about": "Sobre",
   "tax_wallet_address": "Endereço da Carteira de Impostos",
-    "pool_monitor": "Monitorar Pool",
+  "pool_monitor": "Monitorar Pool",
   "pool_id": "ID da Pool",
   "pool_id_placeholder": "Digite o ID da pool",
   "date_from": "Data de Início",

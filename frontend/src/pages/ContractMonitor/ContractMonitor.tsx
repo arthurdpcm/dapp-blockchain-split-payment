@@ -55,15 +55,14 @@ const ContractMonitor = () => {
 
   if (!account) {
     return (
-      <Container title={t('contract_monitor')} maxWidth='800px'>
+      <Container title={t('contract_monitor')} maxWidth="800px">
         <ContractMonitorTitle>{t('connect_wallet_to_view')}</ContractMonitorTitle>
       </Container>
     );
   }
 
   return (
-    <Container title={t('contract_monitor')} maxWidth='800px'>
-
+    <Container title={t('contract_monitor')} maxWidth="800px">
       <ContractMonitorSection>
         {/* <p>{t('tax_wallet_address')}: {taxWalletAddress}</p> */}
         <ContractMonitorSectionTitle>{t('contract_balance')}</ContractMonitorSectionTitle>

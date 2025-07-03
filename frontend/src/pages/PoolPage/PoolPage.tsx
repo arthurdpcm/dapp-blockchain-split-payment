@@ -2,10 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getPool } from '../../services/api';
 import Loading from '../../components/Loading/Loading';
-import {
-  TaxMonitorDescription,
-  TaxMonitorTotal,
-} from '../TaxMonitor/TaxMonitor.styled';
+import { TaxMonitorDescription, TaxMonitorTotal } from '../TaxMonitor/TaxMonitor.styled';
 import { useTranslation } from 'react-i18next';
 import type { PoolData } from '../../models/PoolData';
 import { Button } from '../../components/ui/Button/Button.styled';
@@ -134,7 +131,7 @@ const PoolPage = () => {
           onClick={() => setCurrentPage(1)}
           disabled={currentPage === 1}
         >
-          <FirstLastSpan>{"<<"}</FirstLastSpan>
+          <FirstLastSpan>{'<<'}</FirstLastSpan>
         </Button>
         <Button
           hasBorder={false}
@@ -162,7 +159,7 @@ const PoolPage = () => {
           onClick={() => setCurrentPage(totalPages)}
           disabled={currentPage === totalPages}
         >
-          <FirstLastSpan>{">>"}</FirstLastSpan>
+          <FirstLastSpan>{'>>'}</FirstLastSpan>
         </Button>
       </div>
     </Container>

@@ -41,7 +41,7 @@ export async function getQuote(tokenIn: string, tokenOut: string) {
     poolId: rawData.pool_id,
     token0Price: rawData.token0Price,
     token1Price: rawData.token1Price,
-    feeTier: rawData.fee_tier
+    feeTier: rawData.fee_tier,
   };
   return swapQuote;
 }

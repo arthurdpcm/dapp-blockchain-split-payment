@@ -3,7 +3,6 @@
   width: 65px;
   aspect-ratio: 1;
   position: relative;
-  
 }
 .loader:before,
 .loader:after {

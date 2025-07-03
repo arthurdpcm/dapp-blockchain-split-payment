@@ -36,7 +36,9 @@ export const useContractData = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getTokenDecimals = useCallback((tokenAddress: string): number => {
-    const token = STABLECOINS.find((coin) => coin.address.toLowerCase() === tokenAddress.toLowerCase());
+    const token = STABLECOINS.find(
+      (coin) => coin.address.toLowerCase() === tokenAddress.toLowerCase()
+    );
     return token ? token.decimals : 6; // Default para 6 decimais
   }, []);
 
@@ -48,7 +50,7 @@ export const useContractData = () => {
 
     try {
       setIsLoading(true);
-      
+
       const balancePromises = STABLECOINS.map(async (coin) => {
         const tokenContract = new ethers.Contract(coin.address, TOKEN_ABI.abi, provider);
         const balance = await tokenContract.balanceOf(TaxWallet);
@@ -65,11 +67,19 @@ export const useContractData = () => {
       const contract = new ethers.Contract(SplitPayment, SPLIT_PAYMENT_ABI.abi, provider);
       const eventFilter = contract.filters.PaymentSplit();
       const pastEvents = await contract.queryFilter(eventFilter);
-      const formattedEvents = (pastEvents.reverse() as (EventLog & { args: PaymentSplitArgs })[]).map((event) => ({
+      const formattedEvents = (
+        pastEvents.reverse() as (EventLog & { args: PaymentSplitArgs })[]
+      ).map((event) => ({
         recipient: event.args.recipient,
-        tokenIn: STABLECOINS.find((coin) => coin.address.toLowerCase() === event.args.tokenIn.toLowerCase())?.symbol || 'Unknown',
+        tokenIn:
+          STABLECOINS.find(
+            (coin) => coin.address.toLowerCase() === event.args.tokenIn.toLowerCase()
+          )?.symbol || 'Unknown',
         amountIn: ethers.formatUnits(event.args.amountIn, getTokenDecimals(event.args.tokenIn)),
-        tokenOut: STABLECOINS.find((coin) => coin.address.toLowerCase() === event.args.tokenOut.toLowerCase())?.symbol || 'Unknown',
+        tokenOut:
+          STABLECOINS.find(
+            (coin) => coin.address.toLowerCase() === event.args.tokenOut.toLowerCase()
+          )?.symbol || 'Unknown',
         amountOut: ethers.formatUnits(event.args.amountOut, getTokenDecimals(event.args.tokenOut)),
         feeTier: event.args.feeTier,
         taxAmount: ethers.formatUnits(event.args.taxAmount, getTokenDecimals(event.args.tokenIn)),
