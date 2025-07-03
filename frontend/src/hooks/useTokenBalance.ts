@@ -29,7 +29,7 @@ export function useTokenBalance(tokenAddress: string) {
     } else {
       setBalance('0');
     }
-  }, [account, provider, tokenAddress]);
+  }, [account, provider, tokenAddress, getTokenDecimals]);
 
   useEffect(() => {
     fetchBalance();

@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ethers, EventLog } from 'ethers';
-import { AccountContext } from '@/context/AccountContext';
+import { useAccount } from '@/context/AccountContext';
 import { SplitPayment, TaxWallet } from '@/constants/contracts-addresses.json';
 import SPLIT_PAYMENT_ABI from '@/constants/abi/SplitPayment.json';
 import { STABLECOINS } from '@/constants/stablecoins';
@@ -30,7 +30,7 @@ interface FormattedPaymentEvent {
 }
 
 export const useContractData = () => {
-  const { provider } = useContext(AccountContext);
+  const { provider } = useAccount();
   const [balances, setBalances] = useState<Record<string, string>>({});
   const [events, setEvents] = useState<FormattedPaymentEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);

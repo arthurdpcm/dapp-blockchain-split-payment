@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { COLORS } from '../../constants/colors';
 import { getBrlUsdSwaps } from '../../services/api';
 import { useEffect } from 'react';
@@ -19,7 +19,7 @@ import {
 } from './TaxMonitor.styled';
 import Button from '../../components/ui/Button/Button';
 import useIsMobile from '../../hooks/useIsMobile';
-import { AccountContext } from '../../context/AccountContext';
+import { useAccount } from '../../context/AccountContext';
 import { useTranslation } from 'react-i18next';
 import Container from '@/components/Container/Container';
 
@@ -77,7 +77,7 @@ const RefreshIcon = ({ size = '2rem', color = COLORS.oceanBlue }) => (
 
 const TaxMonitor = () => {
   const [brlUsdSwapsByPool, setBrlUsdSwapsByPool] = useState<BrlUsdSwapsByPool[]>([]);
-  const { account } = useContext(AccountContext);
+  const { account } = useAccount();
   const isMobile = useIsMobile();
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();

@@ -1,6 +1,6 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useContractData } from '../../hooks/useContractData';
-import { AccountContext } from '../../context/AccountContext';
+import { useAccount } from '../../context/AccountContext';
 import Loading from '../../components/Loading/Loading';
 import {
   ContractMonitorTitle,
@@ -21,8 +21,8 @@ import { useTranslation } from 'react-i18next';
 import Container from '@/components/Container/Container';
 
 const ContractMonitor = () => {
-  const { account } = useContext(AccountContext);
-  const { balances, events, isLoading, taxWalletAddress } = useContractData();
+  const { account } = useAccount();
+  const { balances, events, isLoading } = useContractData();
   const { t } = useTranslation();
 
   // --- Pagination State ---

@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react';
-import { AccountContext } from '../context/AccountContext';
+import { useEffect } from 'react';
+import { useAccount } from '../context/AccountContext';
 import { ethers } from 'ethers';
 
 interface EthereumProvider {
@@ -16,7 +16,7 @@ declare global {
 
 export function useWallet() {
   // Agora pegamos TUDO do contexto
-  const { account, setAccount, provider, setProvider } = useContext(AccountContext);
+  const { account, setAccount, provider, setProvider } = useAccount();
 
   // O useEffect não precisa mais do provider como dependência
   useEffect(() => {

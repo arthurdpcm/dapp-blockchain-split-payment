@@ -1,5 +1,5 @@
-import { useContext, useState } from 'react';
-import { AccountContext } from '../../context/AccountContext';
+import { useState } from 'react';
+import { useAccount } from '../../context/AccountContext';
 import Loading from '../../components/Loading/Loading';
 import {
   ContractMonitorTitle,
@@ -16,7 +16,7 @@ import type { PoolData } from '@/models/PoolData';
 import PoolDetails from '@/components/PoolDetails/PoolDetails';
 
 const PoolMonitor = () => {
-  const { account } = useContext(AccountContext);
+  const { account } = useAccount();
   const { t } = useTranslation();
 
   // --- Form State ---
