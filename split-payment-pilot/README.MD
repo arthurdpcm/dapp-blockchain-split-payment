@@ -38,7 +38,7 @@ Para começar a trabalhar com este projeto, siga os passos abaixo.
 1.  **Clone o Repositório:**
     ```bash
     git clone https://github.com/seu-usuario/dapp-blockchain-split-payment.git
-    cd dapp-blockchain-split-payment/piloto
+    cd dapp-blockchain-split-payment/split-payment-pilot
     ```
 
 2.  **Instale as dependências do Node.js:**
@@ -53,7 +53,7 @@ Para começar a trabalhar com este projeto, siga os passos abaixo.
     anvil --version
     ```
 
-4.  **Crie um arquivo `.env` na raiz da pasta `piloto/`:**
+4.  **Crie um arquivo `.env` na raiz da pasta `split-payment-pilot/`:**
     Este arquivo armazenará sua URL de RPC da Polygon.
     ```env
     POLYGON_MAINNET_RPC_URL="https://polygon-rpc.com"
