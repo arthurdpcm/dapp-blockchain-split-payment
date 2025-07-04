@@ -68,7 +68,7 @@ THEGRAPH_API_TOKEN="seu_token_de_api_do_the_graph_aqui"
 Com tudo configurado, inicie o servidor com o Uvicorn.
 
 ```bash
-uvicorn main:app --reload
+python -m uvicorn main:app --reload
 ```
 
 -   `--reload`: Faz com que o servidor reinicie automaticamente após qualquer alteração no código.
