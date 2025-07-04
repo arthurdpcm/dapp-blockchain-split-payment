@@ -20,6 +20,11 @@ module.exports = {
       accounts: [process.env.PRIVATE_KEY],
       chainId: 80002,
     },
+    polygon: {
+      url: process.env.POLYGON_RPC_URL || "https://polygon-rpc.com/",
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 137,
+    },
   },
   solidity:{
     compilers: [
