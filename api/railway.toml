@@ -4,7 +4,7 @@ dockerfilePath = "api/Dockerfile"
 
 [deploy]
 runtime = "V2"
-startCommand = "uvicorn api.main:app --host 0.0.0.0 --port 8000"
+startCommand = "uvicorn main:app --host 0.0.0.0 --port 8000"
 sleepApplication = false
 multiRegionConfig = { "us-east4-eqdc4a" = { numReplicas = 1 } }
 restartPolicyType = "ON_FAILURE"
