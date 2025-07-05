@@ -46,7 +46,6 @@ const PoolMonitor = () => {
       const toTimestamp = dateTo
         ? (new Date(`${dateTo}T23:59:59`).getTime() / 1000).toString()
         : undefined;
-      console.log(fromTimestamp, ' ', toTimestamp);
       const data = await getPool(poolId, fromTimestamp, toTimestamp);
       // order by timestamp descending
       data.swaps.sort((a, b) => Number(b.timestamp) - Number(a.timestamp));
