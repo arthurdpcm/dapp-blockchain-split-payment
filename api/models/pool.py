@@ -1,6 +1,4 @@
-from pydantic import BaseModel
-
-class PoolSwapSummary(BaseModel):
+class PoolSwapSummary():
     pool_id: str
     token0: str | None
     token1: str | None

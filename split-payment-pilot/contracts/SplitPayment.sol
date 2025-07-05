@@ -5,6 +5,8 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
 import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
 
+import "hardhat/console.sol";
+
 contract SplitPayment {
   using SafeERC20 for IERC20;
 
@@ -138,6 +140,7 @@ contract SplitPayment {
       require(uniswapRouter != address(0), "Uniswap router cannot be the zero address");
       require(isValidStablecoin(tokenIn), "Token is not a valid stablecoin");
       // Transfer tokens from sender to contract
+      console.log("Transferring tokens from sender to contract");
       TransferHelper.safeTransferFrom(
           tokenIn,
           msg.sender,
@@ -149,10 +152,11 @@ contract SplitPayment {
       uint256 netAmount = amountIn - taxAmount;
       // Send tax to taxWallet
       TransferHelper.safeTransfer(tokenIn, taxWallet, taxAmount);
-
+      console.log("Tax amount sent to tax wallet:", taxAmount);
       TransferHelper.safeApprove(tokenIn, uniswapRouter, netAmount);
       // Swap netAmount via Uniswap
       ISwapRouter router = ISwapRouter(uniswapRouter);
+      console.log("Swapping net amount via Uniswap");
       // Naively set amountOutMinimum to 0. In production, use an oracle or other data source to choose a safer value for amountOutMinimum.
       // We also set the sqrtPriceLimitx96 to be 0 to ensure we swap our exact input amount.
       ISwapRouter.ExactInputSingleParams memory params =

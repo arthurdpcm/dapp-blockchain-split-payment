@@ -5,6 +5,10 @@ from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
+@router.get("/health")
+def health_check():
+    return JSONResponse(content={"status": "healthy"})
+
 @router.get("/brl-usd-swaps", response_model=list[PoolSwapSummary])
 def brl_usd_swaps():
     data = get_brl_usd_swaps_cached()
