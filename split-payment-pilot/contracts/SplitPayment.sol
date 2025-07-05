@@ -138,6 +138,7 @@ contract SplitPayment {
       require(uniswapRouter != address(0), "Uniswap router cannot be the zero address");
       require(isValidStablecoin(tokenIn), "Token is not a valid stablecoin");
       // Transfer tokens from sender to contract
+
       TransferHelper.safeTransferFrom(
           tokenIn,
           msg.sender,
@@ -153,6 +154,7 @@ contract SplitPayment {
       TransferHelper.safeApprove(tokenIn, uniswapRouter, netAmount);
       // Swap netAmount via Uniswap
       ISwapRouter router = ISwapRouter(uniswapRouter);
+
       // Naively set amountOutMinimum to 0. In production, use an oracle or other data source to choose a safer value for amountOutMinimum.
       // We also set the sqrtPriceLimitx96 to be 0 to ensure we swap our exact input amount.
       ISwapRouter.ExactInputSingleParams memory params =

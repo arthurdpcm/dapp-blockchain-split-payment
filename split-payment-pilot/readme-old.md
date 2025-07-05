@@ -112,15 +112,11 @@ brz.symbol()
 
 
 
-
 /mnt/c/Users/Arthur Duarte/Desktop/CEFET/Blockchain/dapp-blockchain-split-payment/piloto$ anvil --fork-url https://polygon-rpc.com
 
 https://polygon-mainnet.infura.io/v3/[API-KEY]
 
 https://thegraph.com/explorer/subgraphs/EsLGwxyeMMeJuhqWvuLmJEiDKXJ4Z6YsoJreUnyeozco?view=Query&chain=arbitrum-one
-
-DUVIDAS:
-se nao existe diversas pools dependendo do feetier, como eu posso fazer?
 
 
 

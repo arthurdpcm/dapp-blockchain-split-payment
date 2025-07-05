@@ -78,7 +78,7 @@ class QuoteService:
             token0_price_temp = float(quote["token0Price"])
             quote["token0Price"] = float(quote["token1Price"])
             quote["token1Price"] = token0_price_temp
-        
+
         response = QuoteResponse(
             pool_id=quote["pool_id"],
             token0Price=quote["token0Price"],

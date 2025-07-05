@@ -10,4 +10,4 @@ def get_quote(tokenIn: str, tokenOut: str):
     data = quote_service_singleton.get_quote_service(tokenIn, tokenOut)
     if not data:
         return JSONResponse(status_code=404, content={"message": "Quote not found"})
-    return JSONResponse(content=data.model_dump())
+    return JSONResponse(content=data.__dict__)
