@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import pools, quote
+from routers import quote, pools
 from services.pool_scheduler import start_scheduler
 
 app = FastAPI(
@@ -17,7 +17,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(pools.router)
+@app.get("/")
+async def root():
+    return {"greeting": "Hello, World!", "message": "Welcome to FastAPI!"}
+
 app.include_router(quote.router)
+app.include_router(pools.router)
 
 start_scheduler()

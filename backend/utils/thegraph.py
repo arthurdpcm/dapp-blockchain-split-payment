@@ -5,9 +5,14 @@ import datetime
 load_dotenv()
 
 url = f"https://gateway.thegraph.com/api/subgraphs/id/EsLGwxyeMMeJuhqWvuLmJEiDKXJ4Z6YsoJreUnyeozco"
+
+token = os.getenv("THEGRAPH_API_TOKEN")
+if not token:
+    raise ValueError("THEGRAPH_API_TOKEN environment variable is not set.")
+  
 headers = {
     "Accept": "application/json",
-    "Authorization": f"Bearer {os.getenv('THEGRAPH_API_TOKEN')}",
+    "Authorization": f"Bearer {token}",
 }
 
 def first_day_of_month_timestamp() -> str:
