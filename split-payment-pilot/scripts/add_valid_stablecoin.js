@@ -18,13 +18,6 @@ async function main() {
       decimals: 18
     },
     {
-      symbol: 'MATIC',
-      name: 'Matic Token',
-      address: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
-      image: '/polygon_logo.png',
-      decimals: 18
-    },
-    {
       symbol: 'EURE',
       name: 'Monerium EUR emoney',
       address: '0x18ec0a6e18e5bc3784fdd3a3634b31245ab704f6',
