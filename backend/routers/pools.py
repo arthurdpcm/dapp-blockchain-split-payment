@@ -18,6 +18,7 @@ def health_check():
 
 @router.get("/pool/{pool_id}")
 def get_pool(pool_id: str, dateFrom: str | None = None, dateTo: str | None = None):
+    pool_id = pool_id.lower()
     data = get_pool_cached(pool_id, date_from=dateFrom, date_to=dateTo)
     if not data:
         return JSONResponse(status_code=404, content={"message": "Pool not found"})
