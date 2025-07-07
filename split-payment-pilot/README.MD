@@ -37,7 +37,7 @@ Para começar a trabalhar com este projeto, siga os passos abaixo.
 
 1.  **Clone o Repositório:**
     ```bash
-    git clone https://github.com/seu-usuario/dapp-blockchain-split-payment.git
+    git clone https://github.com/arthurdpcm/dapp-blockchain-split-payment.git
     cd dapp-blockchain-split-payment/split-payment-pilot
     ```
 

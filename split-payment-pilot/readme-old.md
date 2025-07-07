@@ -123,7 +123,7 @@ https://thegraph.com/explorer/subgraphs/EsLGwxyeMMeJuhqWvuLmJEiDKXJ4Z6YsoJreUnye
 
  const [owner] = await ethers.getSigners();
     const splitPaymentContract = await ethers.getContractAt(
-      "SplitPayment", // O nome do seu contrato
+      "SplitPayment",
       "0xB9d86f7faDDC177C41E1d3de8a7a21127a8018D2",
       owner
     );
