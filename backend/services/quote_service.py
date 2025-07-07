@@ -81,8 +81,8 @@ class QuoteService:
 
         response = QuoteResponse(
             pool_id=quote["pool_id"],
-            token0Price=quote["token0Price"],
-            token1Price=quote["token1Price"],
+            token0Price=float(quote["token0Price"]),
+            token1Price=float(quote["token1Price"]),
             fee_tier=int(quote["feeTier"])
         )
         return response
