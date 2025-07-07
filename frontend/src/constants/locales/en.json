@@ -91,5 +91,10 @@
   "pool_not_found_error": "Pool not found. Please check the pool ID and try again.",
   "amount0": "Amount Token 0",
   "amount1": "Amount Token 1",
-  "timestamp": "Timestamp"
+  "timestamp": "Timestamp",
+  "close": "Close",
+  "swap_success_tx_hash": "Swap successful! Transaction hash: {{txHash}}",
+  "swap_error": "An error occurred during the swap, please try again: {{error}}",
+  "swap_error_generic": "An error occurred during the swap, please try again.",
+  "swap_error_invalid_input": "Invalid input for the swap. Please check the values and try again."
 }

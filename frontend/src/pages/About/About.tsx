@@ -53,7 +53,7 @@ const About = () => {
         <AboutText>E-mail: duartearthur42@gmail.com</AboutText>
         <AboutText>
           <a
-            href="COLOQUE_O_LINK_DO_SEU_TCC_AQUI"
+            href="LINK_AINDA_NAO_EXISTE"
             target="_blank"
             rel="noopener noreferrer"
             style={{ color: '#23d9d9', textDecoration: 'underline' }}

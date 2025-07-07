@@ -13,12 +13,14 @@ export default function Modal({
   open,
   onConfirm,
   onClose,
+  isNotificationModal = false,
   title,
   children,
 }: {
   open: boolean;
   onConfirm: () => void;
   onClose: () => void;
+  isNotificationModal?: boolean;
   title: string;
   children: React.ReactNode;
 }) {
@@ -32,11 +34,13 @@ export default function Modal({
         <ModalTitle>{title}</ModalTitle>
         <ModalText>{children}</ModalText>
         <ModalButtonContainer>
-          <Button
-            onClick={onClose}
-            isMobile={false}
-            isConnect={false}
-            hasBorder={true}
+          { !isNotificationModal && (
+            <>
+              <Button
+                onClick={onClose}
+                isMobile={false}
+                isConnect={false}
+                hasBorder={true}
             padding="medium"
           >
             {t('cancel') || 'Cancel'}
@@ -50,6 +54,19 @@ export default function Modal({
           >
             {t('confirm') || 'Confirm'}
           </Button>
+            </>
+          )}
+          { isNotificationModal && (
+            <Button
+              onClick={onConfirm}
+              isMobile={false}
+              isConnect={false}
+              hasBorder={true}
+              padding="medium"
+            >
+              {t('close')}
+            </Button>
+          )}
         </ModalButtonContainer>
       </ModalContent>
     </ModalContainer>

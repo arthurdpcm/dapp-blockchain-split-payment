@@ -38,7 +38,6 @@ const PoolMonitor = () => {
     setIsLoading(true);
     setPoolData(null);
     setError(null);
-    console.log(import.meta.env.VITE_API_URL);
     try {
       const fromTimestamp = dateFrom
         ? (new Date(`${dateFrom}T00:00:00`).getTime() / 1000).toString()

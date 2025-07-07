@@ -40,6 +40,11 @@ const Swap: React.FC = () => {
 
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [feedbackModal, setFeedbackModal] = useState<{
+    open: boolean;
+    success: boolean;
+    message: string;
+  } | null>(null);
 
   const { t } = useTranslation();
   const { account, connect } = useWallet();
@@ -96,7 +101,11 @@ const Swap: React.FC = () => {
     setIsConfirmModalOpen(false);
 
     if (!account || !tokenIn.address || !tokenOut.address || amount0AsNumber <= 0) {
-      alert(t('swap_error_invalid_input'));
+      setFeedbackModal({
+        open: true,
+        success: false,
+        message: t('swap_error_invalid_input'),
+      });
       return;
     }
     setIsSwapLoading(true);
@@ -109,26 +118,31 @@ const Swap: React.FC = () => {
         tokenInDecimals: tokenIn.decimals,
       });
 
-      // Lógica de sucesso movida para dentro do try
       if (swapResult?.txHash) {
-        alert(`Swap realizado com sucesso! Tx Hash: ${swapResult.txHash}`);
-        // ATUALIZA OS SALDOS APÓS O SUCESSO!
+        setFeedbackModal({
+          open: true,
+          success: true,
+          message: t('swap_success_tx_hash', { txHash: swapResult.txHash }),
+        });
         refreshTokenInBalance();
         refreshTokenOutBalance();
-        // Reseta os campos do formulário
         setAmount0('');
         setAmount1('');
         setHasUserInteracted(false);
       } else if (swapResult?.error) {
-        // Se o hook retornar um erro estruturado
-        alert(`Erro no swap: ${swapResult.error}`);
+        setFeedbackModal({
+          open: true,
+          success: false,
+          message: `${t('swap_error')} ${swapResult.error}`,
+        });
       }
     } catch (error) {
-      console.error('Error executing swap:', error);
-      // O erro já é tratado dentro do hook useSwap, mas podemos ter um fallback
-      alert(`Ocorreu um erro durante o swap.`);
+      setFeedbackModal({
+        open: true,
+        success: false,
+        message: t('swap_error_generic'),
+      });
     } finally {
-      // O finally é ideal apenas para parar o loading
       setIsSwapLoading(false);
     }
   };
@@ -327,6 +341,7 @@ const Swap: React.FC = () => {
         )}
       </div>
 
+      {/* Modal de confirmação do swap */}
       <Modal
         open={isConfirmModalOpen}
         onConfirm={handleConfirmSwap}
@@ -351,6 +366,24 @@ const Swap: React.FC = () => {
               {t('click_here')}
             </Link>
           </p>
+        </div>
+      </Modal>
+
+
+      <Modal
+        open={!!feedbackModal?.open}
+        onConfirm={() => setFeedbackModal(null)}
+        onClose={() => setFeedbackModal(null)}
+        isNotificationModal={true}
+        title={feedbackModal?.success ? t('success') : t('error')}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+          <img
+            src={feedbackModal?.success ? '/success.svg' : '/error.svg'}
+            alt={feedbackModal?.success ? 'Success' : 'Error'}
+            style={{ width: 96, height: 96, marginBottom: 8 }}
+          />
+          <span style={{ textAlign: 'center' }}>{feedbackModal?.message}</span>
         </div>
       </Modal>
     </Container>
