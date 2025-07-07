@@ -133,7 +133,7 @@ const Swap: React.FC = () => {
         setFeedbackModal({
           open: true,
           success: false,
-          message: `${t('swap_error')} ${swapResult.error}`,
+          message: t('swap_error', { error: swapResult.error }),
         });
       }
     } catch (error) {

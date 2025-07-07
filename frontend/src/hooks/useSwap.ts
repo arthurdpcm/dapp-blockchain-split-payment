@@ -159,7 +159,7 @@ export function useSwap() {
 
         await swapTx.wait();
         setTxHash(swapTx.hash);
-
+        console.log('Tx Hash:', swapTx.hash);
         return { txHash: swapTx.hash, error: null };
       } catch (err: any) {
         console.error('Erro durante o swap:', err);
