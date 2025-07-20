@@ -24,7 +24,7 @@ Este é o frontend do projeto Split Payment DApp, uma aplicação web para swap 
    ```sh
    npm install
    ```
-2. **Renomeie o arquivo `.env.example` para `.env` na raiz da pasta `split-payment-pilot/` e defina as suas varíaveis.**
+2. **Renomeie o arquivo `.env.example` para `.env` na raiz da pasta `frontend/` e defina as suas varíaveis.**
 
 
 3. Rode o projeto:
