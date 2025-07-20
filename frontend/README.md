@@ -35,6 +35,16 @@ Este é o frontend do projeto Split Payment DApp, uma aplicação web para swap 
 
 4. Acesse em [http://localhost:5173](http://localhost:5173)
 
+5. Usar script para envio de tokens na pasta do contrato para conseguir testar.
+Este script irá enviar os tokens de um holder para o endereço do remetente definido. Necessário para testes locais.
+
+```bash
+npx hardhat run scripts/send_brz.js --network anvil
+npx hardhat run scripts/send_brla.js --network anvil
+npx hardhat run scripts/send_pol.js --network anvil
+
+```
+
 ## Estrutura de Pastas
 
 - `src/pages/Swap/` — Página principal de swap
