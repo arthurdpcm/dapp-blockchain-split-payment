@@ -46,7 +46,7 @@ Para começar a trabalhar com este projeto, siga os passos abaixo.
     npm install
     ```
 
-3.  **Instale o Foundry (se ainda não tiver):**
+3.  **Instale o Foundry (se ainda não tiver, mas deve ser feito no linux ou no wsl caso esteja no windows):**
     ```bash
     curl -L https://foundry.paradigm.xyz | bash
     foundryup # Garante que você tem a última versão
