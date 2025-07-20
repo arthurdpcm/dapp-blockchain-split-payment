@@ -24,13 +24,8 @@ Este é o frontend do projeto Split Payment DApp, uma aplicação web para swap 
    ```sh
    npm install
    ```
-2. Crie um arquivo `.env` na pasta `frontend/` com o seguinte conteúdo:
+2. **Renomeie o arquivo `.env.example` para `.env` na raiz da pasta `split-payment-pilot/` e defina as suas varíaveis.**
 
-   ```env
-   VITE_INFURA_URL=https://polygon-mainnet.infura.io/v3/SEU_INFURA_PROJECT_ID
-   ```
-
-   > Você pode usar outro endpoint público de Polygon, se preferir.
 
 3. Rode o projeto:
 
