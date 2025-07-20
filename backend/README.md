@@ -28,22 +28,7 @@ Siga os passos abaixo para configurar e rodar a API localmente.
 
 -   Certifique-se de ter o **Python 3.11** ou superior instalado.
 
-### 2. Crie um Ambiente Virtual (Recomendado)
-
-É uma boa prática isolar as dependências do projeto.
-
-```bash
-# Crie o ambiente virtual
-python -m venv venv
-
-# Ative o ambiente
-# No Windows:
-venv\Scripts\activate
-# No macOS/Linux:
-source venv/bin/activate
-```
-
-### 3. Instale as Dependências
+### 2. Instale as Dependências
 
 Instale todas as bibliotecas necessárias a partir do arquivo `requirements.txt`.
 
@@ -51,19 +36,9 @@ Instale todas as bibliotecas necessárias a partir do arquivo `requirements.txt`
 pip install -r requirements.txt
 ```
 
-### 4. Configure as Variáveis de Ambiente
+### 3. **Renomeie o arquivo `.env.example` para `.env` na raiz da pasta `backend/` e defina as suas varíaveis.**
 
-A API precisa de uma chave para se comunicar com o The Graph.
-
--   Crie um arquivo chamado `.env` na raiz do diretório `api/`.
--   Adicione a seguinte variável ao arquivo, substituindo pelo seu token:
-
-```env
-# api/.env
-THEGRAPH_API_TOKEN="seu_token_de_api_do_the_graph_aqui"
-```
-
-### 5. Execute a Aplicação
+### 4. Execute a Aplicação
 
 Com tudo configurado, inicie o servidor com o Uvicorn.
 
