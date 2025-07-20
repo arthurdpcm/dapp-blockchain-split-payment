@@ -110,7 +110,7 @@ Este script irá:
 3.  Salvar os endereços dos contratos implantados no arquivo `contract-addresses.json` para fácil acesso por outros scripts.
 
 # 4. Script para envio de token
-Este script irá enviar os tokens de um holder para o endereço do remetente definido. Necessário para testes locais.
+Este script irá enviar os tokens de um holder para o endereço do remetente definido. **Necessário para testes locais para pagamentos de gas e testes da PoC**.
 
 ```bash
 npx hardhat run scripts/send_brz.js --network anvil
