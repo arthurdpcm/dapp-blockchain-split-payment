@@ -53,13 +53,7 @@ Para começar a trabalhar com este projeto, siga os passos abaixo.
     anvil --version
     ```
 
-4.  **Crie um arquivo `.env` na raiz da pasta `split-payment-pilot/`:**
-    Este arquivo armazenará sua URL de RPC da Polygon.
-    ```env
-    POLYGON_MAINNET_RPC_URL="https://polygon-rpc.com"
-    # Ou use um provedor como Alchemy/Infura para maior confiabilidade:
-    # POLYGON_MAINNET_RPC_URL="https://polygon-mainnet.g.alchemy.com/v2/SUA_CHAVE_ALCHEMY"
-    ```
+4.  **Renomeie o arquivo `.env.example` para `.env` na raiz da pasta `split-payment-pilot/` e defina as suas varíaveis.**
 
 # 2. Rodando um Fork Local da Polygon com Anvil
 
