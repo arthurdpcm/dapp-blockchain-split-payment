@@ -46,7 +46,7 @@ A interface web com a qual o usuário interage, desenvolvida com React e TypeScr
 Para obter instruções detalhadas sobre como configurar, testar e executar cada componente, por favor, consulte os arquivos `README.md` dentro de seus respectivos diretórios:
 
 -   **Para o Smart Contract:** [`/split-payment-pilot/README.MD`](./split-payment-pilot/README.MD)
--   **Para o Backend:** [`/backend/README.md`](./api/README.md)
+-   **Para o Backend:** [`/backend/README.md`](./backend/README.md)
 -   **Para o Frontend:** [`/frontend/README.md`](./frontend/README.md)
 
 Este README principal serve como um ponto de partida para entender a estrutura e o propósito geral do projeto.
