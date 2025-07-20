@@ -69,6 +69,8 @@ Com tudo configurado, inicie o servidor com o Uvicorn.
 
 ```bash
 python -m uvicorn main:app --reload
+ou
+uvicorn main:app --host 0.0.0.0 --port 8080
 ```
 
 -   `--reload`: Faz com que o servidor reinicie automaticamente após qualquer alteração no código.

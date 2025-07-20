@@ -21,7 +21,7 @@ task("add-stablecoin", "Adiciona um novo endereço de stablecoin à lista de tok
 
     // Pega a instância do contrato SplitPayment
     const splitPaymentContract = await ethers.getContractAt(
-      "SplitPayment", // O nome do seu contrato
+      "SplitPayment", 
       contractAddresses.SplitPayment,
       owner
     );

@@ -24,4 +24,4 @@ async def root():
 app.include_router(quote.router)
 app.include_router(pools.router)
 
-start_scheduler()
+# start_scheduler()
