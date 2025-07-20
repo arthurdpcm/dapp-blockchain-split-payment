@@ -82,7 +82,7 @@ npx hardhat compile
 ### Testes
 Execute a suíte de testes. Os testes são configurados para rodar no fork do Anvil, interagindo com tokens e pools reais da Uniswap.
 ```bash
-npx hardhat test
+npx hardhat test --network anvil
 ```
 Os testes cobrem:
 - Funcionalidades de `onlyOwner`.
