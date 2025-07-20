@@ -67,6 +67,8 @@ anvil --fork-url $POLYGON_MAINNET_RPC_URL
 ```
 Anvil iniciará um nó local na porta `8545`, espelhando o estado da Polygon. **Mantenha este terminal aberto.**
 
+Após isso, trocar no arquivo hardhat.config.js a variavel blocknumber para o blocknumber que aparecer nos logs do anvil.
+
 # 3. Ciclo de Vida do Contrato
 
 Com o ambiente configurado e o Anvil rodando, você pode compilar, testar e implantar o contrato.
@@ -98,7 +100,7 @@ Isso criará uma pasta `coverage/` com um relatório detalhado em HTML.
 ### Implantação (Deploy)
 Para implantar os contratos no seu fork local do Anvil:
 ```bash
-npx hardhat run scripts/deploy.js --network localhost
+npx hardhat run scripts/deploy.js --network anvil
 ```
 Este script irá:
 1.  Implantar um contrato `Token` de exemplo (ERC-20).
@@ -114,7 +116,7 @@ O script `scripts/interact.js` demonstra como usar as funcionalidades do `SplitP
 
 Execute o script:
 ```bash
-npx hardhat run scripts/interact.js --network localhost
+npx hardhat run scripts/interact.js --network anvil
 ```
 O script usa os endereços do `contract-addresses.json` e executa as seguintes ações:
 1.  Adiciona o BRZ como uma stablecoin.
@@ -125,7 +127,7 @@ O script usa os endereços do `contract-addresses.json` e executa as seguintes a
 ### Usando o Console do Hardhat
 Para uma interação mais manual e exploratória:
 ```bash
-npx hardhat console --network localhost
+npx hardhat console --network anvil
 ```
 Dentro do console, você pode instanciar e chamar as funções do contrato:
 ```javascript
@@ -144,7 +146,7 @@ await splitPayment.taxWallet();
 const BRZ_ADDRESS = "0x4fAD614A7b5533E7245b7333513c19b06794348F";
 await splitPayment.isStablecoin(BRZ_ADDRESS);
 ```
-# 5. Análise de Segurança com Mythril
+# 5. Análise de Segurança com Mythril (opcional se estiver rodando local)
 
 Mythril é uma poderosa ferramenta para análise estática e simbólica de segurança. Para usá-la, é recomendado ter um ambiente Python.
 
