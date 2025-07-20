@@ -98,6 +98,8 @@ npx hardhat coverage
 Isso criará uma pasta `coverage/` com um relatório detalhado em HTML.
 
 ### Implantação (Deploy)
+Antes de implantar, verifique o endereço da tax wallet para que possa fazer seus testes.
+
 Para implantar os contratos no seu fork local do Anvil:
 ```bash
 npx hardhat run scripts/deploy.js --network anvil
