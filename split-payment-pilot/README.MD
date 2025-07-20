@@ -90,7 +90,7 @@ Os testes cobrem:
 - Lógica de swap na Uniswap V3, incluindo a busca dinâmica da `feeTier` via The Graph.
 - Falhas esperadas, como tentativas de swap com tokens não aprovados.
 
-### Cobertura de Testes
+### Cobertura de Testes (opcional)
 Para gerar um relatório de cobertura de código:
 ```bash
 npx hardhat coverage
@@ -107,7 +107,17 @@ Este script irá:
 2.  Implantar o contrato `SplitPayment`.
 3.  Salvar os endereços dos contratos implantados no arquivo `contract-addresses.json` para fácil acesso por outros scripts.
 
-# 4. Interagindo com o Contrato
+# 4. Script para envio de token
+Este script irá enviar os tokens de um holder para o endereço do remetente definido. Necessário para testes locais.
+
+```bash
+npx hardhat run scripts/send_brz.js --network anvil
+npx hardhat run scripts/send_brla.js --network anvil
+npx hardhat run scripts/send_pol.js --network anvil
+
+```
+
+# 5. Interagindo com o Contrato
 
 Após a implantação, você pode interagir com o contrato usando o script `interact.js` ou o console do Hardhat.
 
@@ -146,7 +156,7 @@ await splitPayment.taxWallet();
 const BRZ_ADDRESS = "0x4fAD614A7b5533E7245b7333513c19b06794348F";
 await splitPayment.isStablecoin(BRZ_ADDRESS);
 ```
-# 5. Análise de Segurança com Mythril (opcional se estiver rodando local)
+# 6. Análise de Segurança com Mythril (opcional se estiver rodando local)
 
 Mythril é uma poderosa ferramenta para análise estática e simbólica de segurança. Para usá-la, é recomendado ter um ambiente Python.
 
@@ -169,7 +179,7 @@ myth analyze contracts/SplitPayment.sol --solc-json solc-json.json -o markdown >
 - `-o markdown`: Formata a saída em Markdown.
 - `> mythil_analysis.md`: Salva o relatório no arquivo `mythil_analysis.md`.
 
-# 6. Estrutura do Projeto
+# 7. Estrutura do Projeto
 
 ```
 piloto/
