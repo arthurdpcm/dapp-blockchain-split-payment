@@ -17,7 +17,7 @@ O coração da aplicação. Um contrato inteligente escrito em Solidity e desenv
 -   **Responsabilidades:** Executar a lógica de swap de tokens e a divisão de pagamentos de forma atômica e segura na blockchain.
 -   **Tecnologias:** Solidity, Hardhat, Uniswap V3, OpenZeppelin, Foundry (Anvil).
 
-### ⚙️ **`/api` (Backend)**
+### ⚙️ **`/backend` (Backend)**
 Um serviço de API construído em Python com FastAPI que atua como uma camada de suporte off-chain.
 -   **Responsabilidades:** Fornecer dados em tempo real para o frontend, como cotações de preços e as melhores pools de liquidez, consultando o subgraph do Uniswap V3 (The Graph) melhorando a experiência do usuário.
 -   **Tecnologias:** Python, FastAPI, The Graph.
