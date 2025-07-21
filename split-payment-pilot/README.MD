@@ -64,6 +64,7 @@ Abra um novo terminal e execute:
 anvil --fork-url $POLYGON_MAINNET_RPC_URL
 # Se você não configurou a variável de ambiente no seu shell, pode passar a URL diretamente:
 # anvil --fork-url https://polygon-rpc.com
+# anvil --fork-url https://polygon-mainnet.infura.io/v3/{YOUR_PRIVATE_KEY}
 ```
 Anvil iniciará um nó local na porta `8545`, espelhando o estado da Polygon. **Mantenha este terminal aberto.**
 
