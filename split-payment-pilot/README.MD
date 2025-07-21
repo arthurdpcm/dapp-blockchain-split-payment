@@ -59,6 +59,9 @@ Para começar a trabalhar com este projeto, siga os passos abaixo.
 
 Para testar e interagir com o contrato em um ambiente realista, vamos usar o Anvil para criar um fork da mainnet da Polygon. Isso nos dá acesso a todos os contratos e dados da mainnet (como tokens e pools da Uniswap) em um ambiente de desenvolvimento local e rápido.
 
+**!Recomendação!**
+Criar chave privada no site da infura: https://developer.metamask.io/
+
 Abra um novo terminal e execute:
 ```bash
 anvil --fork-url $POLYGON_MAINNET_RPC_URL
